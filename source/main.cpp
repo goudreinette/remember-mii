@@ -18,6 +18,7 @@
 // Images
 #include "electrocuted10_jpg.h"
 #include "electrocuted1_jpg.h"
+#include "remember_mii_jpg.h"
 #include "skeleton_jpg.h"
 
 // Sounds
@@ -30,6 +31,9 @@
 
 // Random
 using Random = effolkronium::random_static;
+
+#include "math.hpp"
+
 
 // Size of the sketch (fix for processing code)
 int width;
@@ -69,6 +73,7 @@ GRRLIB_texImg* fontTexture;
 // Images
 GRRLIB_texImg* skeleton_img;
 GRRLIB_texImg* electrocutedImages[2];
+GRRLIB_texImg* remembermii_img;
 
 // WiiMote
 ir_t ir1;  // infrared
@@ -102,51 +107,6 @@ bool electrocutePlayed =
 bool chillPlayed = false;  // Flag to check if soundtrack has been started
 int rumbleTimer = 0;       // Rumble for one second when you lose
 
-// math helpers -------------------------------------
-int constrain(int val, int min, int max) {
-  return std::max(std::min(val, max), min);
-}
-
-bool pointInRectangle(int px, int py, int x1, int y1, int x2, int y2) {
-  return (px > x1 && px < x2 && py > y1 && py < y2);
-}
-
-int dist(int x1, int y1, int x2, int y2) {
-  return sqrt(pow((x1 - x2), 2) + pow((y1 - y2), 2));
-}
-
-float distanceToLine(int px, int py, int x1, int y1, int x2, int y2) {
-  float A = px - x1;
-  float B = py - y1;
-  float C = x2 - x1;
-  float D = y2 - y1;
-
-  float dot = A * C + B * D;
-  float len_sq = C * C + D * D;
-  float param = -1;
-
-  if (len_sq != 0) {
-    param = dot / len_sq;
-  }
-
-  float xx, yy;
-
-  if (param < 0) {
-    xx = x1;
-    yy = y1;
-  } else if (param > 1) {
-    xx = x2;
-    yy = y2;
-  } else {
-    xx = x1 + param * C;
-    yy = y1 + param * D;
-  }
-
-  float dx = px - xx;
-  float dy = py - yy;
-
-  return sqrt(dx * dx + dy * dy);
-}
 
 // the path!! -------------------------------------
 #define NUM_POINTS 6
@@ -251,15 +211,18 @@ void showMainMenu() {
     chillPlayed = true;
   }
 
+  GRRLIB_DrawImg(-50, 0, remembermii_img, 0,
+                 .9, .9, WHITE);  // Draw a jpeg
+
   // Show menu text
-  const char* menuText = "BUZZWIRE";
-  GRRLIB_Printf(width / 2 - (strlen(menuText) * 16), 100, fontTexture, WHITE, 2,
-                "%s", menuText);
+  // const char* menuText = "BUZZWIRE";
+  // GRRLIB_Printf(width / 2 - (strlen(menuText) * 16), 100, fontTexture, WHITE, 2,
+  //               "%s", menuText);
 
   // Show highscore text
-  std::string highscoreText = std::format("HIGHSCORE: {}", highscore);
-  GRRLIB_Printf(width / 2 - (strlen(highscoreText.c_str()) * 8), 140,
-                fontTexture, WHITE, 1, highscoreText.c_str());
+  // std::string highscoreText = std::format("HIGHSCORE: {}", highscore);
+  // GRRLIB_Printf(width / 2 - (strlen(highscoreText.c_str()) * 8), 140,
+  //               fontTexture, WHITE, 1, highscoreText.c_str());
 
   // Start Button
   Rect startButtonRect = Rect{
@@ -270,10 +233,10 @@ void showMainMenu() {
       startButtonRect.height, mouseX, mouseY);
   int startButtonColor = hoveringStartButton ? WHITE : LIME;
   int startTextColor = BLACK;
-  GRRLIB_Rectangle(startButtonRect.x, startButtonRect.y, startButtonRect.width,
-                   startButtonRect.height, startButtonColor, true);
-  GRRLIB_Printf(width / 2 - 36, height / 2 - 6, fontTexture, startTextColor, 1,
-                "START");
+  // GRRLIB_Rectangle(startButtonRect.x, startButtonRect.y, startButtonRect.width,
+  //                  startButtonRect.height, startButtonColor, true);
+  // GRRLIB_Printf(width / 2 - 36, height / 2 - 6, fontTexture, startTextColor, 1,
+  //               "START");
 
   // showElectrocutedAnimation();
 
@@ -447,6 +410,7 @@ int main() {
 
   // Load images
   skeleton_img = GRRLIB_LoadTexture(skeleton_jpg);
+  remembermii_img = GRRLIB_LoadTexture(remember_mii_jpg);
   loadElectrocutedAnimation();
 
   // Initialize MP3 player and load sounds
