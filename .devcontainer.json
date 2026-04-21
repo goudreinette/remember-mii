@@ -13,5 +13,5 @@
 			]
 		}
 	},
-	"initializeCommand": "git submodule update --init --recursive && cd GRRLIB && make -C GRRLIB clean all install"
+	"postCreateCommand": "git submodule update --init --recursive && cd GRRLIB && make -C GRRLIB clean all install"
 }
