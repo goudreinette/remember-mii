@@ -15,7 +15,8 @@
                 "${workspaceFolder}/**"
             ],
             "defines": [
-                "ARM9"
+                "ARM9",
+                "GEKKO"
             ],
             "cStandard": "c11",
             "cppStandard": "c++20",
