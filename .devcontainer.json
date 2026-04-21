@@ -12,6 +12,6 @@
 				// "softpack6ix.nds-emulator-vscode"
 			]
 		}
-	}
-	// "initializeCommand": "git submodule update --init --recursive"
+	},
+	"initializeCommand": "git submodule update --init --recursive && cd GRRLIB && make -C GRRLIB clean all install"
 }
