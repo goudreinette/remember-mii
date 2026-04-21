@@ -1,15 +1,19 @@
-#include <asndlib.h>
-#include <grrlib.h>
 #include <math.h>
-#include <mp3player.h>
-#include <ogc/lwp_watchdog.h>  // Needed for gettime and ticks_to_millisecs
 #include <stdio.h>
 #include <stdlib.h>
-#include <wiiuse/wpad.h>
-
 #include <vector>
 
+#include <asndlib.h>
+#include <grrlib.h>
+#include <mp3player.h>
+#include <ogc/lwp_watchdog.h>  // Needed for gettime and ticks_to_millisecs
+#include <wiiuse/wpad.h>
+
+
+// Includes
+#include "math.hpp"
 #include "random.hpp"
+#include "colors.hpp"
 
 // Font
 #include "BMfont2_png.h"
@@ -29,28 +33,16 @@
 #include "chill_mp3.h"
 #include "electrocute_mp3.h"
 
+
 // Random
 using Random = effolkronium::random_static;
 
-#include "math.hpp"
 
 
 // Size of the sketch (fix for processing code)
 int width;
 int height;
 
-// Colors (hex + transparency)
-enum Colors {
-  MAROON = 0x800000FF,
-  WHITE = 0xFFFFFFFF,
-  TRANSPARENT_WHITE = 0xFFFFFFDD,
-  BLACK = 0x000000FF,
-  LIME = 0x00FF00FF,
-  ORANGE = 0xFFA000FF,
-  RED = 0xFF0000FF,
-  BLUE = 0x0000FFFF,
-  SILVER = 0xC0C0C0FF
-};
 
 // Level and highscore
 int level = 1;
@@ -63,9 +55,9 @@ int startTime = time(NULL);
 int currentTime() { return time(NULL) - startTime; }
 
 int remainingTime() {
-  return std::max(
-      0, levelTimeLimit - currentTime());  // Zorg dat tijd niet negatief wordt
+  return std::max(0, levelTimeLimit - currentTime());  // Zorg dat tijd niet negatief wordt
 }
+
 
 // Font
 GRRLIB_texImg* fontTexture;
@@ -92,7 +84,7 @@ struct PathLine {
   int x1, y1, x2, y2;
 };
 
-// Game logic, adapted from processing
+// Game logic, adapted from processing version
 int stickX = 125;
 int stickY = 300;
 bool stickPickedUp = false;
@@ -102,8 +94,7 @@ bool gameOver = false;      // Flag to check if game is over
 bool gameStarted = false;   // Flag to check if the game has started
 bool inMainMenu = true;     // Flag to check if in main menu
 bool gameWon = false;       // Flag to check if game is won
-bool electrocutePlayed =
-    false;                 // Flag to check if electrocute sound has been played
+bool electrocutePlayed = false; // Flag to check if electrocute sound has been played
 bool chillPlayed = false;  // Flag to check if soundtrack has been started
 int rumbleTimer = 0;       // Rumble for one second when you lose
 
@@ -166,6 +157,8 @@ bool isOnPath(int x, int y) {
 
   return false;
 }
+
+// 
 
 // game logic -------------------------------------
 void checkGameOver() {
@@ -425,10 +418,10 @@ int main() {
     buttonsHeld = WPAD_ButtonsHeld(0);
     WPAD_IR(WPAD_CHAN_0, &ir1);
 
+
     // Rumble!
     // printf("rumbleTimer: %i", rumbleTimer);
     // SYS_Report("rumbleTimer: %i\r", rumbleTimer);
-
     // SYS_Report("timer: %i\r", currentTime());
     if (rumbleTimer > 0) {
       WPAD_Rumble(0, 1);
