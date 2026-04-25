@@ -17,7 +17,7 @@
 
 
 Scene scene_lettertomunincipality() {    
-    MP3Player_PlayBuffer(serguhh_loop_mp3, serguhh_loop_mp3_size, NULL);
+    // MP3Player_PlayBuffer(serguhh_loop_mp3, serguhh_loop_mp3_size, NULL);
     
 
     GRRLIB_texImg* writing_img = GRRLIB_LoadTexture(letter_writing_scene_jpg);;
@@ -38,9 +38,9 @@ Scene scene_lettertomunincipality() {
 
         // Draw letter
         if (showing_letter) {
-            GRRLIB_DrawImg(0, 0, letter_img, 0, .9, .9, WHITE);  // Draw a jpeg
+            GRRLIB_DrawImg(0, 0, letter_img, 0, 1., 1., WHITE);  // Draw a jpeg
         } else {
-            GRRLIB_DrawImg(0, 0, writing_img, 0, .9, .9, WHITE);  // Draw a jpeg
+            GRRLIB_DrawImg(0, 0, writing_img, 0, 1., 1., WHITE);  // Draw a jpeg
         }
 
         // Draw cursor!
@@ -52,8 +52,8 @@ Scene scene_lettertomunincipality() {
         } else {
             float alpha = map(sin(i / 30.0), -1.0, 1.0, 200.0, 255.0);
             // float scale = map(sin(i / 10.0), -1.0, 1.0, .9, 1.);
-            float scale = .9;
-            GRRLIB_DrawImg(100, 325, continue_img, 0, scale, scale, RGBA(255,255,255,alpha));
+            float scale = 1.;
+            GRRLIB_DrawImg(102, 377, continue_img, 0, scale, scale, RGBA(255,255,255,alpha));
 
             // if (i % 120 < 60) {
 

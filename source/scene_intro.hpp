@@ -42,68 +42,53 @@ Scene scene_intro() {
     int width = rmode->viWidth;
     int height = rmode->viHeight;
 
-
     GRRLIB_texImg* frame;
 
-    auto frame1 = &intro_1_jpg;
     
-    const uint8_t *frames[19] = {
-        intro_1_jpg,
-        intro_2_jpg,
-        intro_3_jpg,
-        intro_4_jpg,
-        intro_5_jpg,
-        intro_6_jpg,
-        intro_7_jpg,
-        intro_8_jpg,
-        intro_9_jpg,
-        intro_10_jpg,
+    const uint8_t (*frames[19])[] = {
+        &intro_1_jpg,
+        &intro_2_jpg,
+        &intro_3_jpg,
+        &intro_4_jpg,
+        &intro_5_jpg,
+        &intro_6_jpg,
+        &intro_7_jpg,
+        &intro_8_jpg,
+        &intro_9_jpg,
+        &intro_10_jpg,
+        &intro_11_jpg,
+        &intro_12_jpg,
+        &intro_13_jpg,
+        &intro_14_jpg,
+        &intro_15_jpg,
+        &intro_16_jpg,
+        &intro_17_jpg,
+        &intro_18_jpg,
+        &intro_19_jpg
     };
-
-    
-    
-    // GRRLIB_texImg* clean[19] = {
-    //     GRRLIB_LoadTexture(intro_2_jpg),
-    //     GRRLIB_LoadTexture(intro_3_jpg),
-    //     GRRLIB_LoadTexture(intro_4_jpg),
-    //     GRRLIB_LoadTexture(intro_5_jpg),
-    //     GRRLIB_LoadTexture(intro_6_jpg),
-    //     GRRLIB_LoadTexture(intro_7_jpg),
-    //     GRRLIB_LoadTexture(intro_8_jpg),
-    //     GRRLIB_LoadTexture(intro_9_jpg),
-    //     GRRLIB_LoadTexture(intro_10_jpg),
-    //     GRRLIB_LoadTexture(intro_11_jpg),
-    //     GRRLIB_LoadTexture(intro_12_jpg),
-    //     GRRLIB_LoadTexture(intro_13_jpg),
-    //     GRRLIB_LoadTexture(intro_14_jpg),
-    //     GRRLIB_LoadTexture(intro_15_jpg),
-    //     GRRLIB_LoadTexture(intro_16_jpg),
-    //     GRRLIB_LoadTexture(intro_17_jpg),
-    //     GRRLIB_LoadTexture(intro_18_jpg),
-    //     GRRLIB_LoadTexture(intro_19_jpg),
-    // };
-
 
 
     int i = 0;
     int slide_i = 0;
+    float slide_opacity = 0;
+
 
     while (true) {
         i++;
+        slide_opacity = lrp(slide_opacity, 255, .01);
+
 
         controller mote = update_wiimote();
 
-        
-
-        if (i % 30 == 0 && slide_i < 10) {
+        if (i % 50 == 0 && slide_i < 18) {
             slide_i++;
-            frame = GRRLIB_LoadTexture(frames[slide_i]);
+            frame = GRRLIB_LoadTexture(*frames[slide_i]);
         }
 
-        GRRLIB_DrawImg(0, 0, frame, 0, .9, .9, RGBA(255,255,255,255));
+        GRRLIB_DrawImg(0, 0, frame, 0, 2, 2, RGBA(255,255,255,slide_opacity));
 
-        if (mote.a_pressed) {
-            // return Scene::LetterToMunincipality;
+        if (slide_i == 18 && i > 20 * 50) {
+            return Scene::LetterToMunincipality;
         }
         
 
