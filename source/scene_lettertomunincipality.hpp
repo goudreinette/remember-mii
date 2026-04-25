@@ -30,30 +30,38 @@ Scene scene_lettertomunincipality() {
     float i = 0;
 
     bool showing_letter = false;
+    float slide_opacity = 0;
+
+    bool viewed_letter = false;
 
     while (true) {
         i++;
+        slide_opacity = lrp(slide_opacity, 255, .01);
+
 
         controller mote = update_wiimote();
 
         // Draw letter
         if (showing_letter) {
-            GRRLIB_DrawImg(0, 0, letter_img, 0, 1., 1., WHITE);  // Draw a jpeg
+            GRRLIB_DrawImg(0, 0, letter_img, 0, 1., 1., RGBA(255,255,255,slide_opacity));  // Draw a jpeg
         } else {
-            GRRLIB_DrawImg(0, 0, writing_img, 0, 1., 1., WHITE);  // Draw a jpeg
+            GRRLIB_DrawImg(0, 0, writing_img, 0, 1., 1., RGBA(255,255,255,slide_opacity));  // Draw a jpeg
         }
 
         // Draw cursor!
-        GRRLIB_Circle(mote.x, mote.y, 10, BLUE, true);
+        // GRRLIB_Circle(mote.x, mote.y, 10, BLUE, true);
 
         // Draw continue button
         if (showing_letter) {
-            
+            if (mote.a_pressed) {
+                showing_letter = false;
+                viewed_letter = true;
+            }
         } else {
             float alpha = map(sin(i / 30.0), -1.0, 1.0, 200.0, 255.0);
             // float scale = map(sin(i / 10.0), -1.0, 1.0, .9, 1.);
             float scale = 1.;
-            GRRLIB_DrawImg(102, 377, continue_img, 0, scale, scale, RGBA(255,255,255,alpha));
+            // GRRLIB_DrawImg(102, 377, continue_img, 0, scale, scale, RGBA(255,255,255,alpha));
 
             // if (i % 120 < 60) {
 
@@ -62,8 +70,8 @@ Scene scene_lettertomunincipality() {
             // }
 
             rect letter = {
-                .x = 300,
-                .y = 250,
+                .x = 350,
+                .y = 300,
                 .width = 150,
                 .height = 150
             };
@@ -71,20 +79,28 @@ Scene scene_lettertomunincipality() {
             bool hovering_letter = GRRLIB_PtInRect(letter.x, letter.y, letter.width, letter.height, mote.x, mote.y);
 
             if (hovering_letter) {
-                GRRLIB_Rectangle(letter.x, letter.y, letter.width, letter.height, RED, true);
+                GRRLIB_Rectangle(letter.x, letter.y, letter.width, letter.height, RGBA(255,255,255,50), true);
                 if (mote.a_pressed) {
                     showing_letter = true;
                 }
             } else {
-                GRRLIB_Rectangle(letter.x, letter.y, letter.width, letter.height, RED, false);
+                GRRLIB_Rectangle(letter.x, letter.y, letter.width, letter.height, RGBA(255,255,255,50), false);
             }
         }
+
+        if (mote.a_pressed && viewed_letter) {
+            GRRLIB_FreeTexture(writing_img);
+            GRRLIB_FreeTexture(letter_img);
+            return Scene::SceneCleaningMachine;
+        }
      
-        // if (mote.a_pressed) {
-        //     GRRLIB_FreeTexture(writing_img);
-        //     GRRLIB_FreeTexture(letter_img);
-        //     return Scene::LetterToMunincipality;
-        // }
+        cursor::draw(mote.x, mote.y);
+
+
+
+        if (mote.a_pressed) {
+            
+        }
         
 
         GRRLIB_Render();

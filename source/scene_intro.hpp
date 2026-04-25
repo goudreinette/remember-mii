@@ -37,7 +37,7 @@
 
 
 Scene scene_intro() {
-    MP3Player_PlayBuffer(serguhh_loop_mp3, serguhh_loop_mp3_size, NULL);
+    // MP3Player_PlayBuffer(serguhh_loop_mp3, serguhh_loop_mp3_size, NULL);
     
     int width = rmode->viWidth;
     int height = rmode->viHeight;
@@ -88,6 +88,9 @@ Scene scene_intro() {
         GRRLIB_DrawImg(0, 0, frame, 0, 2, 2, RGBA(255,255,255,slide_opacity));
 
         if (slide_i == 18 && i > 20 * 50) {
+            for (int i = 0; i < 19; i++) {
+            }
+            
             return Scene::LetterToMunincipality;
         }
         

@@ -14,6 +14,7 @@
 
 // #include "continue_jpg.h"
 #include "serguhh_loop_mp3.h"
+#include "SERGUHH_spannedloop_mp3.h"
 // #include "Continue_Button_Wii_png.h"
 
 #include "scene.hpp"
@@ -22,8 +23,8 @@
 
 
 Scene scene_cleaningmachine() {
-    MP3Player_PlayBuffer(serguhh_loop_mp3, serguhh_loop_mp3_size, NULL);
-    
+    MP3Player_Stop();
+
     GRRLIB_texImg* clean[4] = {
         GRRLIB_LoadTexture(clean1_jpg),
         GRRLIB_LoadTexture(clean2_jpg),
@@ -43,25 +44,38 @@ Scene scene_cleaningmachine() {
     float timer;
 
     bool is_intro = true;
+    bool transition_down = false;
 
 
     while (true) {
-        if (is_intro) {
+        if (!MP3Player_IsPlaying()) {
+            MP3Player_PlayBuffer(SERGUHH_spannedloop_mp3, SERGUHH_spannedloop_mp3_size, NULL);
+        }
+
+        if (!transition_down) {
             slide_opacity = lrp(slide_opacity, 255, .01);
+        }
+
+        if (transition_down) {
+            slide_opacity = lrp(slide_opacity, 0, .01);
+            if (slide_opacity < 30) {
+                transition_down = false;
+                slide_i++;
+            }
         }
 
         controller mote = update_wiimote();
         
 
         if (mote.a_pressed) {
-            slide_i++;
+            transition_down = true;
 
             if (slide_i == 4) {
                 return Scene::LetterToMunincipality;
             }
         }
 
-        GRRLIB_DrawImg(0, 0, clean[slide_i], 0, .9, .9, RGBA(255,255,255, slide_opacity));  // Draw a jpeg
+        GRRLIB_DrawImg(0, 0, clean[slide_i], 0, 1, 1, RGBA(255,255,255, slide_opacity));  // Draw a jpeg
         GRRLIB_Render();
     }
 }

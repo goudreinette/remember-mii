@@ -13,6 +13,7 @@
 #include "colors.hpp"
 #include "math.hpp"
 #include "random.hpp"
+#include "interface.hpp"
 
 // Font
 #include "BMfont2_png.h"
@@ -413,10 +414,10 @@ int main() {
   WPAD_SetVRes(0, width, height);
 
 
-  Scene current_scene = Scene::Intro;
+  Scene current_scene = Scene::Title;
   Scene next_scene;
-
-
+  cursor::load();
+  
   while (true) {
     // Clear the screen with black
     // GRRLIB_FillScreen(BLACK);

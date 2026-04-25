@@ -6,12 +6,13 @@
 // #include "chill_mp3.h"
 #include <mp3player.h>
 
-// #include "clickshort_mp3.h"
+#include "clickshort_mp3.h"
 
 ir_t ir1;  // infrared
 int rumbleTimer = 0;
 
 
+#include "cursor_png.h"
 
 struct controller {
     int x, y;
@@ -52,11 +53,10 @@ controller update_wiimote() {
     mote.a_held = buttonsHeld & WPAD_BUTTON_A;
     mote.b_held = buttonsHeld & WPAD_BUTTON_B;
 
-    // if (mote.a_pressed) {
-	//     MP3Player_PlayBuffer(clickshort_mp3, clickshort_mp3_size, NULL);
+    if (mote.a_pressed) {
+	    MP3Player_PlayBuffer(clickshort_mp3, clickshort_mp3_size, NULL);
 
-    // }
+    }
 
     return mote;
 }
-
