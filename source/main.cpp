@@ -25,11 +25,11 @@
 #include "remember_mii_jpg.h"
 #include "skeleton_jpg.h"
 
-// Sounds
 #include <format>
 #include <iostream>
 #include <string>
 
+// Sounds
 #include "chill_mp3.h"
 #include "electrocute_mp3.h"
 
