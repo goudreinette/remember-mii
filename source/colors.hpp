@@ -1,3 +1,5 @@
+#pragma once
+
 // Colors (hex + transparency)
 enum Colors {
     // 

@@ -40,7 +40,9 @@
 #include "scene_ending.hpp"
 #include "scene_buyingacar.hpp"
 #include "scene_breakingupwithfriend.hpp"
+#include "scene_cleaningmachine.hpp"
 #include "scene_golfaggression.hpp"
+#include "scene_intro.hpp"
 #include "scene_golfclass.hpp"
 #include "scene_biking.hpp"
 
@@ -402,7 +404,7 @@ int main() {
 
   // Load images
   skeleton_img = GRRLIB_LoadTexture(skeleton_jpg);
-  loadElectrocutedAnimation();
+//   loadElectrocutedAnimation();
 
   // Initialize MP3 player and load sounds
   ASND_Init();
@@ -410,7 +412,8 @@ int main() {
 
   WPAD_SetVRes(0, width, height);
 
-  Scene current_scene = Scene::Title;
+
+  Scene current_scene = Scene::Intro;
   Scene next_scene;
 
 
@@ -421,6 +424,8 @@ int main() {
 
     if (current_scene == Scene::Title) {
 		next_scene = scene_title();
+	} else if (current_scene == Scene::Intro) {
+		next_scene = scene_intro();
 	} else if (current_scene == Scene::BuyingACar) {
 		next_scene = scene_buyingacar();
 	} else if (current_scene == Scene::BreakingUpWithAFriend) {
@@ -429,6 +434,8 @@ int main() {
 		next_scene = scene_lettertomunincipality();
 	} else if (current_scene == Scene::LostKeyCard) {
 		next_scene = scene_lostkeycard();
+	} else if (current_scene == Scene::SceneCleaningMachine) {
+		next_scene = scene_cleaningmachine();
 	} else if (current_scene == Scene::SceneGolfClass) {
 		next_scene = scene_golfclass();
 	} else if (current_scene == Scene::SceneGolfAggression) {
@@ -441,9 +448,9 @@ int main() {
 
 	current_scene = next_scene;
 
-	if (buttonsDown & WPAD_BUTTON_HOME) {
-		break;
-	}
+    if (buttonsDown & WPAD_BUTTON_HOME) {
+      break;
+    }
   }
 
 	// GRRLIB_FreeTexture(fontTexture);

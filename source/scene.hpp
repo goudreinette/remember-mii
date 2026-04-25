@@ -17,3 +17,8 @@ enum class Scene {
     SceneMarioKart,
     Ending
 };  
+
+
+struct rect {
+    int x, y, width, height;
+};
