@@ -4,6 +4,7 @@
 
 enum class Scene {
     Title, 
+    Intro, 
     BuyingACar,
     BreakingUpWithAFriend,
     LetterToMunincipality,

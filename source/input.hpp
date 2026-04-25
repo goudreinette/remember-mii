@@ -2,8 +2,16 @@
 
 #include <wiiuse/wpad.h>
 
+#include <grrlib.h>
+// #include "chill_mp3.h"
+#include <mp3player.h>
+
+// #include "clickshort_mp3.h"
+
 ir_t ir1;  // infrared
 int rumbleTimer = 0;
+
+
 
 struct controller {
     int x, y;
@@ -43,6 +51,11 @@ controller update_wiimote() {
     mote.b_pressed = buttonsDown & WPAD_BUTTON_B;
     mote.a_held = buttonsHeld & WPAD_BUTTON_A;
     mote.b_held = buttonsHeld & WPAD_BUTTON_B;
+
+    // if (mote.a_pressed) {
+	//     MP3Player_PlayBuffer(clickshort_mp3, clickshort_mp3_size, NULL);
+
+    // }
 
     return mote;
 }

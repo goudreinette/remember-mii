@@ -29,8 +29,8 @@
 #include "skeleton_jpg.h"
 
 // Sounds
-#include "chill_mp3.h"
-#include "electrocute_mp3.h"
+// #include "chill_mp3.h"
+// #include "electrocute_mp3.h"
 
 // Scenes
 #include "scene.hpp"
@@ -73,7 +73,6 @@ GRRLIB_texImg* fontTexture;
 // Images
 GRRLIB_texImg* skeleton_img;
 GRRLIB_texImg* electrocutedImages[2];
-GRRLIB_texImg* remembermii_img;
 
 // WiiMote
 int buttonsDown;
@@ -203,14 +202,6 @@ void showElectrocutedAnimation() {
 }
 
 void showMainMenu() {
-  if (!chillPlayed) {
-    // Start playing background music.
-    // TODO: figure out if it loops
-    MP3Player_PlayBuffer(chill_mp3, chill_mp3_size, NULL);
-    chillPlayed = true;
-  }
-
-  GRRLIB_DrawImg(-50, 0, remembermii_img, 0, .9, .9, WHITE);  // Draw a jpeg
 
   // Show menu text
   // const char* menuText = "BUZZWIRE";
@@ -288,7 +279,7 @@ void showGameOver() {
   if (!electrocutePlayed) {
     MP3Player_Stop();
     MP3Player_Volume(500);
-    MP3Player_PlayBuffer(electrocute_mp3, electrocute_mp3_size, NULL);
+    // MP3Player_PlayBuffer(electrocute_mp3, electrocute_mp3_size, NULL);
     electrocutePlayed = true;  // Mark electrocute sound as played
   }
 
@@ -411,7 +402,6 @@ int main() {
 
   // Load images
   skeleton_img = GRRLIB_LoadTexture(skeleton_jpg);
-  remembermii_img = GRRLIB_LoadTexture(remember_mii_jpg);
   loadElectrocutedAnimation();
 
   // Initialize MP3 player and load sounds
@@ -427,26 +417,7 @@ int main() {
   while (true) {
     // Clear the screen with black
     // GRRLIB_FillScreen(BLACK);
-
-
-	
-
-    // // If in main menu, show the Start button
-    // if (inMainMenu) {
-    //   showMainMenu();
-    // }
-
-    // // If the game has started, show the game screen
-    // if (gameStarted && !gameOver && !gameWon) {
-    //   playGame();
-    // }
-
-    // // If the game is over, show the Game Over screen
-    // if (gameOver) {
-    //   showGameOver();
-    // }
-
-   
+    
 
     if (current_scene == Scene::Title) {
 		next_scene = scene_title();
@@ -460,8 +431,10 @@ int main() {
 		next_scene = scene_lostkeycard();
 	} else if (current_scene == Scene::SceneGolfClass) {
 		next_scene = scene_golfclass();
-	}  else if (current_scene == Scene::SceneGolfAggression) {
+	} else if (current_scene == Scene::SceneGolfAggression) {
 		next_scene = scene_golfaggression();
+	} else if (current_scene == Scene::SceneBiking) {
+		next_scene = scene_biking();
 	} else if (current_scene == Scene::Ending) {
 		next_scene = scene_ending();
 	}
