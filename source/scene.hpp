@@ -1,4 +1,4 @@
-
+#pragma once
 
 
 
@@ -8,5 +8,11 @@ enum class Scene {
     BreakingUpWithAFriend,
     LetterToMunincipality,
     LostKeyCard,
+    SceneGolfClass,
+    SceneGolfAggression,
+    SceneNintendogs,
+    SceneCleaningMachine,
+    SceneBiking,
+    SceneMarioKart,
     Ending
-};
+};  

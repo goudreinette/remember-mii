@@ -1,48 +1,56 @@
-#include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <vector>
-
 #include <asndlib.h>
 #include <grrlib.h>
+#include <math.h>
 #include <mp3player.h>
 #include <ogc/lwp_watchdog.h>  // Needed for gettime and ticks_to_millisecs
+#include <stdio.h>
+#include <stdlib.h>
 #include <wiiuse/wpad.h>
 
+#include <vector>
 
 // Includes
+#include "colors.hpp"
 #include "math.hpp"
 #include "random.hpp"
-#include "colors.hpp"
 
 // Font
 #include "BMfont2_png.h"
 #include "BMfont4_png.h"
 
 // Images
+#include <format>
+#include <iostream>
+#include <string>
+
 #include "electrocuted10_jpg.h"
 #include "electrocuted1_jpg.h"
 #include "remember_mii_jpg.h"
 #include "skeleton_jpg.h"
 
-#include <format>
-#include <iostream>
-#include <string>
-
 // Sounds
 #include "chill_mp3.h"
 #include "electrocute_mp3.h"
+
+// Scenes
+#include "scene.hpp"
+#include "scene_title.hpp"
+#include "scene_lostkeycard.hpp"
+#include "scene_lettertomunincipality.hpp"
+#include "scene_ending.hpp"
+#include "scene_buyingacar.hpp"
+#include "scene_breakingupwithfriend.hpp"
+#include "scene_golfaggression.hpp"
+#include "scene_golfclass.hpp"
+#include "scene_biking.hpp"
 
 
 // Random
 using Random = effolkronium::random_static;
 
-
-
 // Size of the sketch (fix for processing code)
 int width;
 int height;
-
 
 // Level and highscore
 int level = 1;
@@ -55,9 +63,9 @@ int startTime = time(NULL);
 int currentTime() { return time(NULL) - startTime; }
 
 int remainingTime() {
-  return std::max(0, levelTimeLimit - currentTime());  // Zorg dat tijd niet negatief wordt
+  return std::max(
+      0, levelTimeLimit - currentTime());  // Zorg dat tijd niet negatief wordt
 }
-
 
 // Font
 GRRLIB_texImg* fontTexture;
@@ -68,7 +76,6 @@ GRRLIB_texImg* electrocutedImages[2];
 GRRLIB_texImg* remembermii_img;
 
 // WiiMote
-ir_t ir1;  // infrared
 int buttonsDown;
 int buttonsHeld;
 int mouseX;
@@ -94,10 +101,9 @@ bool gameOver = false;      // Flag to check if game is over
 bool gameStarted = false;   // Flag to check if the game has started
 bool inMainMenu = true;     // Flag to check if in main menu
 bool gameWon = false;       // Flag to check if game is won
-bool electrocutePlayed = false; // Flag to check if electrocute sound has been played
+bool electrocutePlayed =
+    false;                 // Flag to check if electrocute sound has been played
 bool chillPlayed = false;  // Flag to check if soundtrack has been started
-int rumbleTimer = 0;       // Rumble for one second when you lose
-
 
 // the path!! -------------------------------------
 #define NUM_POINTS 6
@@ -158,7 +164,7 @@ bool isOnPath(int x, int y) {
   return false;
 }
 
-// 
+//
 
 // game logic -------------------------------------
 void checkGameOver() {
@@ -180,7 +186,7 @@ void resetGame() {
   buzzed = false;
   electrocutePlayed = false;  // Reset electrocutePlayed flag
   chillPlayed = false;
-  rumbleTimer = 0;
+//   rumbleTimer = 0;
 }
 
 // Electrocuted animation
@@ -204,12 +210,12 @@ void showMainMenu() {
     chillPlayed = true;
   }
 
-  GRRLIB_DrawImg(-50, 0, remembermii_img, 0,
-                 .9, .9, WHITE);  // Draw a jpeg
+  GRRLIB_DrawImg(-50, 0, remembermii_img, 0, .9, .9, WHITE);  // Draw a jpeg
 
   // Show menu text
   // const char* menuText = "BUZZWIRE";
-  // GRRLIB_Printf(width / 2 - (strlen(menuText) * 16), 100, fontTexture, WHITE, 2,
+  // GRRLIB_Printf(width / 2 - (strlen(menuText) * 16), 100, fontTexture, WHITE,
+  // 2,
   //               "%s", menuText);
 
   // Show highscore text
@@ -226,15 +232,17 @@ void showMainMenu() {
       startButtonRect.height, mouseX, mouseY);
   int startButtonColor = hoveringStartButton ? WHITE : LIME;
   int startTextColor = BLACK;
-  // GRRLIB_Rectangle(startButtonRect.x, startButtonRect.y, startButtonRect.width,
+  // GRRLIB_Rectangle(startButtonRect.x, startButtonRect.y,
+  // startButtonRect.width,
   //                  startButtonRect.height, startButtonColor, true);
-  // GRRLIB_Printf(width / 2 - 36, height / 2 - 6, fontTexture, startTextColor, 1,
+  // GRRLIB_Printf(width / 2 - 36, height / 2 - 6, fontTexture, startTextColor,
+  // 1,
   //               "START");
 
   // showElectrocutedAnimation();
 
   if (hoveringStartButton) {
-    rumbleTimer = 1;
+    // rumbleTimer = 1;
   }
 
   // Detect button click for Start
@@ -382,7 +390,7 @@ void playGame() {
   // Display game over message if off path, and rumble
   if (gameOver) {
     score = 0;
-    rumbleTimer = 60;
+    // rumbleTimer = 60;
     gameStarted = false;
   }
 }
@@ -410,61 +418,62 @@ int main() {
   ASND_Init();
   MP3Player_Init();
 
+  WPAD_SetVRes(0, width, height);
+
+  Scene current_scene = Scene::Title;
+  Scene next_scene;
+
+
   while (true) {
-    // Read input
-    WPAD_SetVRes(0, width, height);
-    WPAD_ScanPads();
-    buttonsDown = WPAD_ButtonsDown(0);
-    buttonsHeld = WPAD_ButtonsHeld(0);
-    WPAD_IR(WPAD_CHAN_0, &ir1);
-
-
-    // Rumble!
-    // printf("rumbleTimer: %i", rumbleTimer);
-    // SYS_Report("rumbleTimer: %i\r", rumbleTimer);
-    // SYS_Report("timer: %i\r", currentTime());
-    if (rumbleTimer > 0) {
-      WPAD_Rumble(0, 1);
-      rumbleTimer--;
-    } else {
-      WPAD_Rumble(0, 0);
-    }
-
-    // Cursor and mousePressed
-    mouseX = ir1.sx - 190;
-    mouseY = ir1.sy - 210;
-    mousePressed = buttonsHeld & WPAD_BUTTON_A;
-    shiftPressed = buttonsHeld & WPAD_BUTTON_B;
-
     // Clear the screen with black
-    GRRLIB_FillScreen(BLACK);
+    // GRRLIB_FillScreen(BLACK);
 
-    // If in main menu, show the Start button
-    if (inMainMenu) {
-      showMainMenu();
-    }
 
-    // If the game has started, show the game screen
-    if (gameStarted && !gameOver && !gameWon) {
-      playGame();
-    }
+	
 
-    // If the game is over, show the Game Over screen
-    if (gameOver) {
-      showGameOver();
-    }
+    // // If in main menu, show the Start button
+    // if (inMainMenu) {
+    //   showMainMenu();
+    // }
 
-    if (buttonsDown & WPAD_BUTTON_HOME) {
-      break;
-    }
+    // // If the game has started, show the game screen
+    // if (gameStarted && !gameOver && !gameWon) {
+    //   playGame();
+    // }
 
-    // Draw cursor!
-    GRRLIB_Circle(mouseX, mouseY, 25, WHITE, true);
+    // // If the game is over, show the Game Over screen
+    // if (gameOver) {
+    //   showGameOver();
+    // }
 
-    GRRLIB_Render();
+   
+
+    if (current_scene == Scene::Title) {
+		next_scene = scene_title();
+	} else if (current_scene == Scene::BuyingACar) {
+		next_scene = scene_buyingacar();
+	} else if (current_scene == Scene::BreakingUpWithAFriend) {
+		next_scene = scene_breakingupwithafriend();
+	} else if (current_scene == Scene::LetterToMunincipality) {
+		next_scene = scene_lettertomunincipality();
+	} else if (current_scene == Scene::LostKeyCard) {
+		next_scene = scene_lostkeycard();
+	} else if (current_scene == Scene::SceneGolfClass) {
+		next_scene = scene_golfclass();
+	}  else if (current_scene == Scene::SceneGolfAggression) {
+		next_scene = scene_golfaggression();
+	} else if (current_scene == Scene::Ending) {
+		next_scene = scene_ending();
+	}
+
+	current_scene = next_scene;
+
+	if (buttonsDown & WPAD_BUTTON_HOME) {
+		break;
+	}
   }
 
-  // GRRLIB_FreeTexture(fontTexture);
-  GRRLIB_Exit();  // Be a good boy, clear the memory allocated by GRRLIB
-  return 0;
+	// GRRLIB_FreeTexture(fontTexture);
+	GRRLIB_Exit();  // Be a good boy, clear the memory allocated by GRRLIB
+	return 0;
 }
