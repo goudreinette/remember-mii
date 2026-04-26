@@ -20,7 +20,6 @@ Scene scene_title() {
     
     GRRLIB_texImg* remembermii_img = GRRLIB_LoadTexture(remember_mii_jpg);
     GRRLIB_texImg* continue_img = GRRLIB_LoadTexture(continue_png);
-    GRRLIB_texImg* cursor_img = GRRLIB_LoadTexture(cursor_png);
 
     int width = rmode->viWidth;
     int height = rmode->viHeight;
@@ -30,39 +29,28 @@ Scene scene_title() {
     bool outro = false;
     int outro_i = 0;
 
+
     while (true) {
         i++;
+
+        controller mote = update_wiimote();
 
         if (!outro) {
             slide_opacity = lrp(slide_opacity, 255, .01);
         }
 
 
-        controller mote = update_wiimote();
-
-        
-
         GRRLIB_DrawImg(-50, 0, remembermii_img, 0, 1, 1, RGBA(255,255,255, slide_opacity));  // Draw a jpeg
 
-        // Draw cursor!
 
-        // GRRLIB_Circle(, BLUE, true);
-
-        // Draw continue button
-        // if (i % 120 < 60) {
-        //     GRRLIB_DrawImg(400, 300, continue_img, 0, .9, .9, WHITE);  // Draw a jpeg
-        // } else {
-        //     GRRLIB_DrawImg(400, 300, continue_img, 0, .9, .9, BLACK);  // Draw a jpeg
-        // }
-
+        // Continue button and cursor
         float alpha = map(sin(i / 30.0), -1.0, 1.0, 75.0, slide_opacity);
         // float scale = map(sin(i / 10.0), -1.0, 1.0, .9, 1.);
         float scale = 1.;
         GRRLIB_DrawImg(375, 377, continue_img, 0, scale, scale, RGBA(255,255,255, alpha));
-
-
+        
+        // Draw cursor!
         cursor::draw(mote.x, mote.y);
-
 
         if (mote.a_pressed) {
             outro = true;
@@ -78,7 +66,6 @@ Scene scene_title() {
                 return Scene::Intro;
             }
         }
-        
 
         GRRLIB_Render();
     }
