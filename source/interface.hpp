@@ -2,11 +2,12 @@
 
 #include "grrlib.h"
 
-
 // Font
 #include "BMfont4_png.h"
 #include "cursor_png.h"
 
+
+// Includes
 #include "scene.hpp"
 
 

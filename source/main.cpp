@@ -18,9 +18,6 @@
 #include "random.hpp"
 #include "interface.hpp"
 
-// Font
-#include "BMfont2_png.h"
-#include "BMfont4_png.h"
 
 // Images
 #include "remember_mii_jpg.h"

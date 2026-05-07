@@ -29,7 +29,6 @@ Scene scene_title() {
     bool outro = false;
     int outro_i = 0;
 
-
     while (true) {
         i++;
 
@@ -38,7 +37,6 @@ Scene scene_title() {
         if (!outro) {
             slide_opacity = lrp(slide_opacity, 255, .01);
         }
-
 
         GRRLIB_DrawImg(-50, 0, remembermii_img, 0, 1, 1, RGBA(255,255,255, slide_opacity));  // Draw a jpeg
 

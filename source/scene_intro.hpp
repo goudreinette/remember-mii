@@ -36,15 +36,15 @@
 #include "input.hpp"
 
 
+
+
 Scene scene_intro() {
     // MP3Player_PlayBuffer(serguhh_loop_mp3, serguhh_loop_mp3_size, NULL);
-    
     int width = rmode->viWidth;
     int height = rmode->viHeight;
 
     GRRLIB_texImg* frame;
 
-    
     const uint8_t (*frames[19])[] = {
         &intro_1_jpg,
         &intro_2_jpg,
@@ -72,26 +72,41 @@ Scene scene_intro() {
     int slide_i = 0;
     float slide_opacity = 0;
 
+    bool fading_out = false;
+
 
     while (true) {
         i++;
-        slide_opacity = lrp(slide_opacity, 255, .01);
-
 
         controller mote = update_wiimote();
 
+        // Animate frames
         if (i % 50 == 0 && slide_i < 18) {
             slide_i++;
             frame = GRRLIB_LoadTexture(*frames[slide_i]);
         }
 
+        // Draw frame
         GRRLIB_DrawImg(0, 0, frame, 0, 2, 2, RGBA(255,255,255,slide_opacity));
 
+        // Fadeout
         if (slide_i == 18 && i > 20 * 50) {
-            for (int i = 0; i < 19; i++) {
+            fading_out = true;
+        }
+
+        // Clean up
+        if (fading_out) {
+            slide_opacity = lrp(slide_opacity, 0, .01);
+
+            if (slide_opacity < .1) {
+                for (int i = 0; i < 19; i++) {
+                    // GRRLIB_FreeTexture(frames[i]);
+                }
+                
+                return Scene::LetterToMunincipality;
             }
-            
-            return Scene::LetterToMunincipality;
+        } else {
+            slide_opacity = lrp(slide_opacity, 255, .01); // Fade-in or stay 
         }
         
 
