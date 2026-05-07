@@ -9,12 +9,12 @@ enum class Scene {
     BreakingUpWithAFriend,
     LetterToMunincipality,
     LostKeyCard,
-    SceneGolfClass,
-    SceneGolfAggression,
-    SceneNintendogs,
-    SceneCleaningMachine,
-    SceneBiking,
-    SceneMarioKart,
+    GolfClass,
+    GolfMurder,
+    Nintendogs,
+    CleaningMachine,
+    Biking,
+    MarioKart,
     Ending
 };  
 

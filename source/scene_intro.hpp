@@ -4,12 +4,14 @@
 
 #include "remember_mii_jpg.h"
 #include "continue_jpg.h"
-#include "serguhh_loop_mp3.h"
+
 // #include "Continue_Button_Wii_png.h"
 
+// Music
 #include "serguhh_loop_mp3.h"
 
 
+// Images
 #include "intro_1_jpg.h"
 #include "intro_2_jpg.h"
 #include "intro_3_jpg.h"

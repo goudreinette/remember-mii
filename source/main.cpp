@@ -34,7 +34,7 @@
 #include "scene_buyingacar.hpp"
 #include "scene_breakingupwithfriend.hpp"
 #include "scene_cleaningmachine.hpp"
-#include "scene_golfaggression.hpp"
+#include "scene_golfmurder.hpp"
 #include "scene_intro.hpp"
 #include "scene_golfclass.hpp"
 #include "scene_biking.hpp"
@@ -61,13 +61,13 @@ int main() {
   // Load font
   textbox::load_font_texture();
 
-  // Initialize MP3 player and load sounds
+  // Initialize MP3 player (and load sounds?)
   ASND_Init();
   MP3Player_Init();
 
   WPAD_SetVRes(0, width, height);
 
-  Scene current_scene = Scene::Title;
+  Scene current_scene = Scene::GolfMurder;
   Scene next_scene;
   cursor::load();
   
@@ -84,13 +84,13 @@ int main() {
 		next_scene = scene_lettertomunincipality();
 	} else if (current_scene == Scene::LostKeyCard) {
 		next_scene = scene_lostkeycard();
-	} else if (current_scene == Scene::SceneCleaningMachine) {
+	} else if (current_scene == Scene::CleaningMachine) {
 		next_scene = scene_cleaningmachine();
-	} else if (current_scene == Scene::SceneGolfClass) {
+	} else if (current_scene == Scene::GolfClass) {
 		next_scene = scene_golfclass();
-	} else if (current_scene == Scene::SceneGolfAggression) {
-		next_scene = scene_golfaggression();
-	} else if (current_scene == Scene::SceneBiking) {
+	} else if (current_scene == Scene::GolfMurder) {
+		next_scene = scene_golfmurder();
+	} else if (current_scene == Scene::Biking) {
 		next_scene = scene_biking();
 	} else if (current_scene == Scene::Ending) {
 		next_scene = scene_ending();

@@ -91,7 +91,7 @@ Scene scene_lettertomunincipality() {
         if (mote.a_pressed && viewed_letter) {
             GRRLIB_FreeTexture(writing_img);
             GRRLIB_FreeTexture(letter_img);
-            return Scene::SceneCleaningMachine;
+            return Scene::CleaningMachine;
         }
      
         cursor::draw(mote.x, mote.y);

@@ -56,5 +56,6 @@
         "streambuf": "cpp",
         "typeinfo": "cpp",
         "variant": "cpp"
-    }
+    },
+    "cmake.sourceDirectory": "/Users/Rein/Documents/Code/wii/remember-mii/GRRLIB"
 }
