@@ -65,6 +65,7 @@ Scene scene_intro() {
 
     GRRLIB_texImg* frame;
 
+    int num_frames = 39;
     const uint8_t (*frames[39])[] = {
         &intro_1_jpg,
         &intro_2_jpg,
@@ -121,16 +122,16 @@ Scene scene_intro() {
         controller mote = update_wiimote();
 
         // Animate frames
-        if (i % 50 == 0 && slide_i < 18) {
+        if (i % 50 == 0 && slide_i < num_frames) {
             slide_i++;
             frame = GRRLIB_LoadTexture(*frames[slide_i]);
         }
 
         // Draw frame
-        GRRLIB_DrawImg(0, 0, frame, 0, 2, 2, RGBA(255,255,255,slide_opacity));
+        GRRLIB_DrawImg(0, 0, frame, 0, 1, 1, RGBA(255,255,255,slide_opacity));
 
         // Fadeout
-        if (slide_i == 38 && i > 20 * 50) {
+        if (slide_i == num_frames && i > 20 * 50) {
             fading_out = true;
         }
 

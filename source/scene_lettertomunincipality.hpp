@@ -17,9 +17,6 @@
 
 
 Scene scene_lettertomunincipality() {    
-    // MP3Player_PlayBuffer(serguhh_loop_mp3, serguhh_loop_mp3_size, NULL);
-    
-
     GRRLIB_texImg* writing_img = GRRLIB_LoadTexture(letter_writing_scene_jpg);;
     GRRLIB_texImg* letter_img =  GRRLIB_LoadTexture(the_letter_itself_jpg);;
     GRRLIB_texImg* continue_img = GRRLIB_LoadTexturePNG(continue_png);
@@ -43,6 +40,7 @@ Scene scene_lettertomunincipality() {
 
         // Draw letter
         if (showing_letter) {
+            // Draw writing scene
             GRRLIB_DrawImg(0, 0, letter_img, 0, 1., 1., RGBA(255,255,255,slide_opacity));  // Draw a jpeg
         } else {
             GRRLIB_DrawImg(0, 0, writing_img, 0, 1., 1., RGBA(255,255,255,slide_opacity));  // Draw a jpeg
@@ -78,6 +76,8 @@ Scene scene_lettertomunincipality() {
  
             bool hovering_letter = GRRLIB_PtInRect(letter.x, letter.y, letter.width, letter.height, mote.x, mote.y);
 
+
+            // Go to letter
             if (hovering_letter) {
                 GRRLIB_Rectangle(letter.x, letter.y, letter.width, letter.height, RGBA(255,255,255,50), true);
                 if (mote.a_pressed) {
@@ -88,6 +88,8 @@ Scene scene_lettertomunincipality() {
             }
         }
 
+
+        // Next scene
         if (mote.a_pressed && viewed_letter) {
             GRRLIB_FreeTexture(writing_img);
             GRRLIB_FreeTexture(letter_img);
@@ -97,11 +99,9 @@ Scene scene_lettertomunincipality() {
         cursor::draw(mote.x, mote.y);
 
 
-
         if (mote.a_pressed) {
             
         }
-        
 
         GRRLIB_Render();
     }

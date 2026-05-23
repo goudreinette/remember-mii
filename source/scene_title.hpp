@@ -11,12 +11,13 @@
 // #include "Continue_Button_Wii_png.h"
 
 #include "scene.hpp"
+#include "music.hpp"
 #include "input.hpp"
 #include "utils.hpp"
 
 
 Scene scene_title() {
-    MP3Player_PlayBuffer(serguhh_loop_mp3, serguhh_loop_mp3_size, NULL);
+    music::play_serguhhs_mind();
     
     GRRLIB_texImg* remembermii_img = GRRLIB_LoadTexture(remember_mii_jpg);
     GRRLIB_texImg* continue_img = GRRLIB_LoadTexture(continue_png);
