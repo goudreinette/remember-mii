@@ -8,7 +8,7 @@ enum class Scene {
     BuyingACar,
     BreakingUpWithAFriend,
     LetterToMunincipality,
-    LostKeyCard,
+    Hotel,
     GolfClass,
     GolfMurder,
     Bowling,

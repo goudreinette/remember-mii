@@ -11,11 +11,6 @@
 #include "interface.hpp"
 
 
-
-#include "clean1_jpg.h"
-#include "clean2_jpg.h"
-#include "clean3_jpg.h"
-#include "clean4_jpg.h"
 #include "continue_jpg.h"
 
 #include "bowling_1_jpg.h"
@@ -36,7 +31,7 @@
 Scene scene_bowling() {
     music::play_spannendloop();
 
-    
+    // Backgrounds
     int num_frames = 12;
     const uint8_t (*frames[12])[] = {
         &bowling_1_jpg,
@@ -53,8 +48,6 @@ Scene scene_bowling() {
         &bowling_21_jpg
     };
 
-    // GRRLIB_texImg* bg = GRRLIB_LoadTexture(golf_classes_1_jpg);
-
     int slide_i = 0;
     float slide_opacity = 0;
     float timer;
@@ -68,9 +61,6 @@ Scene scene_bowling() {
     while (true) {
         controller mote = update_wiimote();
 
-     if (!transition_down) {
-            slide_opacity = lrp(slide_opacity, 255, .01);
-        }
 
         if (transition_down) {
             slide_opacity = lrp(slide_opacity, 0, .01);
@@ -78,6 +68,9 @@ Scene scene_bowling() {
                 transition_down = false;
                 slide_i++;
 
+                // Game logic comes here
+                // -----
+                
                 
                 if (slide_i > num_frames) {
                     return Scene::GolfMurder;
@@ -85,9 +78,10 @@ Scene scene_bowling() {
 
                 frame = GRRLIB_LoadTexture(*frames[slide_i]);
             }
+        } else {
+            slide_opacity = lrp(slide_opacity, 255, .01);
         }
 
-        
 
         if (mote.a_pressed) {
             transition_down = true;
@@ -95,8 +89,7 @@ Scene scene_bowling() {
 
         
 
-
-        GRRLIB_DrawImg(0, 0, frame, 0, 1, 1, RGBA(255,255,255, slide_opacity));  // Draw a jpeg
+        GRRLIB_DrawImg(0, 0, frame, 0, 1, 1, RGBA(255,255,255, slide_opacity));  // Draw background
 
         cursor::draw(mote.x, mote.y);
         music::check_loop();

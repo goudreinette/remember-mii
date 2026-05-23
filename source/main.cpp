@@ -37,7 +37,7 @@
 #include "scene_golfmurder.hpp"
 #include "scene_intro.hpp"
 #include "scene_lettertomunincipality.hpp"
-#include "scene_lostkeycard.hpp"
+#include "scene_hotel.hpp"
 #include "scene_title.hpp"
 
 // Random
@@ -67,7 +67,7 @@ int main() {
   ASND_Init();
   MP3Player_Init();
 
-  Scene current_scene = Scene::Title;
+  Scene current_scene = Scene::Hotel;
   Scene next_scene;
   cursor::load();
 
@@ -78,8 +78,8 @@ int main() {
       next_scene = scene_intro();
     } else if (current_scene == Scene::LetterToMunincipality) {
       next_scene = scene_lettertomunincipality();
-    } else if (current_scene == Scene::LostKeyCard) {
-      next_scene = scene_lostkeycard();
+    } else if (current_scene == Scene::Hotel) {
+      next_scene = scene_hotel();
     } else if (current_scene == Scene::CleaningMachine) {
       next_scene = scene_cleaningmachine();
     } else if (current_scene == Scene::GolfClass) {

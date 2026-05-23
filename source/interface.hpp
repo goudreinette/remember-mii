@@ -15,7 +15,7 @@
 #include "scene.hpp"
 #include "math.hpp"
 #include "utils.hpp"
-
+#include <algorithm>    // std::min
 
 
 namespace textbox {
@@ -33,7 +33,7 @@ namespace continue_button {
     GRRLIB_texImg* continue_hover_img = GRRLIB_LoadTexture(continue_hover_png);
 
     bool draw(float x, float y, float i, float max_opacity, float cursor_x, float cursor_y) {
-        float alpha = map(sin(i / 30.0), -1.0, 1.0, 200.0, max_opacity);
+        float alpha = std::min(map(sin(i / 30.0), -1.0, 1.0, 200.0, max_opacity), max_opacity);
         // float scale = map(sin(i / 10.0), -1.0, 1.0, .9, 1.);
         float scale = map(sin(i / 30.0), -1.0, 1.0, 1.0, 1.1);
         float w = 200;

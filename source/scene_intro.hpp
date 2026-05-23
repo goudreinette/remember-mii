@@ -6,8 +6,6 @@
 #include "remember_mii_jpg.h"
 #include "continue_jpg.h"
 
-// #include "Continue_Button_Wii_png.h"
-
 
 // Images
 #include "intro_1_jpg.h"
@@ -151,6 +149,8 @@ Scene scene_intro() {
             slide_opacity = lrp(slide_opacity, 255, .05); // Fade-in or stay 
         }
         
+        // no cursor draw and music loop needed here? --
+
 
         GRRLIB_Render();
     }
