@@ -14,6 +14,16 @@
 
 
 
+
 namespace music {
-    
+    void play_serguhh_loop() {
+        MP3Player_PlayBuffer(serguhh_loop_mp3, serguhh_loop_mp3_size, NULL);
+    }
+
+    void play_serguhhs_mind() {
+
+    }
+
+    void play_spannendloop() {
+    }
 }

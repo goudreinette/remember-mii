@@ -1,14 +1,12 @@
 #pragma once
 
+#include "vector"
 #include "grrlib.h"
 
 #include "remember_mii_jpg.h"
 #include "continue_jpg.h"
 
 // #include "Continue_Button_Wii_png.h"
-
-// Music
-#include "serguhh_loop_mp3.h"
 
 
 // Images
@@ -52,16 +50,16 @@
 #include "intro_38_jpg.h"
 #include "intro_39_jpg.h"
 
-#include "vector"
 
 #include "scene.hpp"
 #include "input.hpp"
-
+#include "music.hpp"
 
 
 
 Scene scene_intro() {
-    // MP3Player_PlayBuffer(serguhh_loop_mp3, serguhh_loop_mp3_size, NULL);
+    music::play_serguhh_loop();
+    
     int width = rmode->viWidth;
     int height = rmode->viHeight;
 
@@ -132,7 +130,7 @@ Scene scene_intro() {
         GRRLIB_DrawImg(0, 0, frame, 0, 2, 2, RGBA(255,255,255,slide_opacity));
 
         // Fadeout
-        if (slide_i == 18 && i > 20 * 50) {
+        if (slide_i == 38 && i > 20 * 50) {
             fading_out = true;
         }
 
