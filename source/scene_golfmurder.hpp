@@ -12,7 +12,6 @@
 #include "golfmurder_1_golfintro_jpg.h"
 #include "golfmurder_1_5_text_julius_png.h"
 #include "golfmurder_2_anger_jpg.h"
-// #include "golfmurder_3_whack_png.h"
 #include "golfmurder_3_whack_jpg.h"
 #include "golfmurder_4_bloodyclub_jpg.h"
 

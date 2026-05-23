@@ -1,0 +1,11 @@
+"Good evening. Room 201. Lost my keycard on the water."
+"ID?"
+"Also in the water."
+"Name?"
+"Serguuhhhh."
+...
+"The profile that checked in hasn't been active since 2006."
+"Yeah. Long story. I've been jumping systems for a while. I'm very good at it now."
+"How good?"
+...
+[FIGHT] [FLIGHT]

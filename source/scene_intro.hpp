@@ -47,7 +47,7 @@ Scene scene_intro() {
 
     GRRLIB_texImg* frame;
 
-    const uint8_t (*frames[19])[] = {
+    const uint8_t (*frames[39])[] = {
         &intro_1_jpg,
         &intro_2_jpg,
         &intro_3_jpg,
@@ -66,7 +66,27 @@ Scene scene_intro() {
         &intro_16_jpg,
         &intro_17_jpg,
         &intro_18_jpg,
-        &intro_19_jpg
+        &intro_19_jpg,
+        &intro_20_jpg,
+        &intro_21_jpg,
+        &intro_22_jpg,
+        &intro_23_jpg,
+        &intro_24_jpg,
+        &intro_25_jpg,
+        &intro_26_jpg,
+        &intro_27_jpg,
+        &intro_28_jpg,
+        &intro_29_jpg,
+        &intro_30_jpg,
+        &intro_31_jpg,
+        &intro_32_jpg,
+        &intro_33_jpg,
+        &intro_34_jpg,
+        &intro_35_jpg,
+        &intro_36_jpg,
+        &intro_37_jpg,
+        &intro_38_jpg,
+        &intro_39_jpg
     };
 
 

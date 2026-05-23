@@ -67,7 +67,7 @@ int main() {
 
   WPAD_SetVRes(0, width, height);
 
-  Scene current_scene = Scene::GolfMurder;
+  Scene current_scene = Scene::Intro;
   Scene next_scene;
   cursor::load();
   
