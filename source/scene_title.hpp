@@ -17,7 +17,7 @@
 
 
 Scene scene_title() {
-    music::play_serguhhs_mind();
+    music::play_serguhh_loop();
     
     GRRLIB_texImg* remembermii_img = GRRLIB_LoadTexture(remember_mii_jpg);
     GRRLIB_texImg* continue_img = GRRLIB_LoadTexture(continue_png);
@@ -65,6 +65,8 @@ Scene scene_title() {
                 return Scene::Intro;
             }
         }
+
+        music::check_loop();
 
         GRRLIB_Render();
     }

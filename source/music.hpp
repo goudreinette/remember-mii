@@ -20,6 +20,8 @@ namespace music {
     Soundtrack current_soundtrack;
 
     void play_current_soundtrack() {
+        MP3Player_Stop();
+        
         if (current_soundtrack == Soundtrack::SerguhhLoop) {
             MP3Player_PlayBuffer(serguhh_loop_mp3, serguhh_loop_mp3_size, NULL);
         }
@@ -32,7 +34,7 @@ namespace music {
             MP3Player_PlayBuffer(SERGUHH_spannedloop_mp3, SERGUHH_spannedloop_mp3_size, NULL);
         }
     }
-    
+
 
     void play_serguhh_loop() {
         current_soundtrack = Soundtrack::SerguhhLoop;
@@ -49,8 +51,6 @@ namespace music {
         play_current_soundtrack();
     }
 
-
-    
 
     void check_loop() {
         if (!MP3Player_IsPlaying() && current_soundtrack != Soundtrack::None) {

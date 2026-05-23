@@ -46,9 +46,6 @@ Scene scene_lettertomunincipality() {
             GRRLIB_DrawImg(0, 0, writing_img, 0, 1., 1., RGBA(255,255,255,slide_opacity));  // Draw a jpeg
         }
 
-        // Draw cursor!
-        // GRRLIB_Circle(mote.x, mote.y, 10, BLUE, true);
-
         // Draw continue button
         if (showing_letter) {
             if (mote.a_pressed) {
@@ -93,15 +90,11 @@ Scene scene_lettertomunincipality() {
         if (mote.a_pressed && viewed_letter) {
             GRRLIB_FreeTexture(writing_img);
             GRRLIB_FreeTexture(letter_img);
-            return Scene::CleaningMachine;
+            return Scene::GolfClass;
         }
      
         cursor::draw(mote.x, mote.y);
-
-
-        if (mote.a_pressed) {
-            
-        }
+        music::check_loop();
 
         GRRLIB_Render();
     }

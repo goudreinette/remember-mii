@@ -58,7 +58,7 @@
 
 
 Scene scene_intro() {
-    music::play_serguhh_loop();
+    // music::play_serguhh_loop();
     
     int width = rmode->viWidth;
     int height = rmode->viHeight;
@@ -128,7 +128,7 @@ Scene scene_intro() {
         }
 
         // Draw frame
-        GRRLIB_DrawImg(0, 0, frame, 0, 1, 1, RGBA(255,255,255,slide_opacity));
+        GRRLIB_DrawImg(0, 0, frame, 0, 2, 2, RGBA(255,255,255,slide_opacity));
 
         // Fadeout
         if (slide_i == num_frames && i > 20 * 50) {

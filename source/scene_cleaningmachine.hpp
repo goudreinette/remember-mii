@@ -23,7 +23,7 @@
 
 
 Scene scene_cleaningmachine() {
-    MP3Player_Stop();
+    music::play_spannendloop();
 
     GRRLIB_texImg* clean[4] = {
         GRRLIB_LoadTexture(clean1_jpg),
@@ -34,12 +34,8 @@ Scene scene_cleaningmachine() {
     
     GRRLIB_texImg* continue_img = GRRLIB_LoadTexture(continue_jpg);
 
-    int width = rmode->viWidth;
-    int height = rmode->viHeight;
 
     int slide_i = 0;
-
-
     float slide_opacity = 0;
     float timer;
 
@@ -48,9 +44,6 @@ Scene scene_cleaningmachine() {
 
 
     while (true) {
-        if (!MP3Player_IsPlaying()) {
-            MP3Player_PlayBuffer(SERGUHH_spannedloop_mp3, SERGUHH_spannedloop_mp3_size, NULL);
-        }
 
         if (!transition_down) {
             slide_opacity = lrp(slide_opacity, 255, .01);
@@ -60,7 +53,12 @@ Scene scene_cleaningmachine() {
             slide_opacity = lrp(slide_opacity, 0, .01);
             if (slide_opacity < 30) {
                 transition_down = false;
+                
                 slide_i++;
+                
+                if (slide_i == 5) {
+                    return Scene::LetterToMunincipality;
+                }
             }
         }
 
@@ -69,11 +67,11 @@ Scene scene_cleaningmachine() {
 
         if (mote.a_pressed) {
             transition_down = true;
-
-            if (slide_i == 4) {
-                return Scene::LetterToMunincipality;
-            }
         }
+
+        
+
+        music::check_loop();
 
         GRRLIB_DrawImg(0, 0, clean[slide_i], 0, 1, 1, RGBA(255,255,255, slide_opacity));  // Draw a jpeg
         GRRLIB_Render();

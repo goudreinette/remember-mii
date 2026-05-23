@@ -5,7 +5,6 @@
 
 #include "scene.hpp"
 #include "music.hpp"
-#include "music.hpp"
 
 
 // Images
@@ -29,7 +28,6 @@ Scene scene_golfmurder() {
     while (true) {
         controller mote = update_wiimote();
 
-        
         if (mote.a_pressed) {
             slide_i++;
 
@@ -49,6 +47,10 @@ Scene scene_golfmurder() {
                 bg = GRRLIB_LoadTexture(golfmurder_4_bloodyclub_jpg);
             }
         }
+
+
+        cursor::draw(mote.x, mote.y);
+        music::check_loop();
 
         GRRLIB_DrawImg(60, 0, bg, 0, 1., 1., RGBA(255,255,255,255));  // Draw a jpeg
         GRRLIB_Render();

@@ -18,47 +18,68 @@
 
 
 Scene scene_golfclass() {
-    GRRLIB_texImg* bg = GRRLIB_LoadTexture(golf_classes_1_jpg);
+    music::play_spannendloop();
 
-    int slide_i = 1;
 
-    bool show_text_julius = false;
-    bool show_whack = false;
+    int num_frames = 6;
+    const uint8_t (*frames[6])[] = {
+        &golf_classes_1_jpg,
+        &golf_classes_2_jpg,
+        &golf_classes_3_jpg,
+        &golf_classes_4_jpg,
+        &golf_classes_5_jpg,
+        &golf_classes_6_jpg
+    };
+
+    // GRRLIB_texImg* bg = GRRLIB_LoadTexture(golf_classes_1_jpg);
+
+    int slide_i = 0;
+    float slide_opacity = 0;
+    float timer;
+
+    bool is_intro = true;
+    bool transition_down = false;
     
-    
+    GRRLIB_texImg* frame;
+
+
     while (true) {
         controller mote = update_wiimote();
 
-        
-        if (mote.a_pressed) {
-            slide_i++;
+     if (!transition_down) {
+            slide_opacity = lrp(slide_opacity, 255, .01);
+        }
 
-            if (slide_i == 1) {
-                bg = GRRLIB_LoadTexture(golf_classes_1_jpg);
-            }
+        if (transition_down) {
+            slide_opacity = lrp(slide_opacity, 0, .01);
+            if (slide_opacity < 30) {
+                transition_down = false;
+                slide_i++;
 
-            if (slide_i == 2) {
-                bg = GRRLIB_LoadTexture(golf_classes_2_jpg);
-            }
+                
+                if (slide_i > num_frames) {
+                    return Scene::LetterToMunincipality;
+                }
 
-            if (slide_i == 3) {
-                bg = GRRLIB_LoadTexture(golf_classes_3_jpg);
-            }
-
-            if (slide_i == 4) {
-                bg = GRRLIB_LoadTexture(golf_classes_4_jpg);
-            }
-
-            if (slide_i == 5) {
-                bg = GRRLIB_LoadTexture(golf_classes_5_jpg);
-            }
-
-            if (slide_i == 6) {
-                bg = GRRLIB_LoadTexture(golf_classes_6_jpg);
+                frame = GRRLIB_LoadTexture(*frames[slide_i]);
             }
         }
 
-        GRRLIB_DrawImg(60, 0, bg, 0, 1., 1., RGBA(255,255,255,255));  // Draw a jpeg
+        
+
+        if (mote.a_pressed) {
+            transition_down = true;
+        }
+
+        
+
+        music::check_loop();
+
+        GRRLIB_DrawImg(0, 0, frame, 0, 1, 1, RGBA(255,255,255, slide_opacity));  // Draw a jpeg
+
+        cursor::draw(mote.x, mote.y);
+        music::check_loop();
+
         GRRLIB_Render();
     }
 }
