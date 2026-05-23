@@ -5,6 +5,7 @@
 
 #include "scene.hpp"
 #include "music.hpp"
+#include "utils.hpp"
 
 
 // Images
@@ -46,7 +47,7 @@ Scene scene_golfclass() {
     while (true) {
         controller mote = update_wiimote();
 
-     if (!transition_down) {
+        if (!transition_down) {
             slide_opacity = lrp(slide_opacity, 255, .01);
         }
 
@@ -58,7 +59,7 @@ Scene scene_golfclass() {
 
                 
                 if (slide_i > num_frames) {
-                    return Scene::LetterToMunincipality;
+                    return Scene::Bowling;
                 }
 
                 frame = GRRLIB_LoadTexture(*frames[slide_i]);

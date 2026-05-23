@@ -19,7 +19,9 @@
 
 #include "scene.hpp"
 #include "input.hpp"
+#include "music.hpp"
 #include "math.hpp"
+#include "utils.hpp"
 
 
 Scene scene_cleaningmachine() {

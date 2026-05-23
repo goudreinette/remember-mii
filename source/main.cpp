@@ -32,6 +32,7 @@
 #include "scene_buyingacar.hpp"
 #include "scene_cleaningmachine.hpp"
 #include "scene_ending.hpp"
+#include "scene_bowling.hpp"
 #include "scene_golfclass.hpp"
 #include "scene_golfmurder.hpp"
 #include "scene_intro.hpp"
@@ -66,7 +67,7 @@ int main() {
   ASND_Init();
   MP3Player_Init();
 
-  Scene current_scene = Scene::GolfClass;
+  Scene current_scene = Scene::Title;
   Scene next_scene;
   cursor::load();
 
@@ -91,6 +92,8 @@ int main() {
       next_scene = scene_golfmurder();
     } else if (current_scene == Scene::Biking) {
       next_scene = scene_biking();
+    } else if (current_scene == Scene::Bowling) {
+      next_scene = scene_bowling();
     } else if (current_scene == Scene::Ending) {
       next_scene = scene_ending();
     }

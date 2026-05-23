@@ -11,6 +11,7 @@ enum class Scene {
     LostKeyCard,
     GolfClass,
     GolfMurder,
+    Bowling,
     Nintendogs,
     CleaningMachine,
     Biking,

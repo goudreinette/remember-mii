@@ -54,6 +54,7 @@
 #include "scene.hpp"
 #include "input.hpp"
 #include "music.hpp"
+#include "utils.hpp"
 
 
 
