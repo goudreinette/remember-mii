@@ -80,7 +80,7 @@ Scene scene_bowling() {
 
                 
                 if (slide_i > num_frames) {
-                    return Scene::CleaningMachine;
+                    return Scene::GolfMurder;
                 }
 
                 frame = GRRLIB_LoadTexture(*frames[slide_i]);

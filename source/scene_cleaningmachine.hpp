@@ -59,7 +59,7 @@ Scene scene_cleaningmachine() {
                 slide_i++;
                 
                 if (slide_i == 5) {
-                    return Scene::LetterToMunincipality;
+                    return Scene::LostKeyCard;
                 }
             }
         }

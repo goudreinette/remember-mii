@@ -59,7 +59,7 @@
 
 
 Scene scene_intro() {
-    // music::play_serguhh_loop();
+    music::play_serguhhs_mind();
     
     int width = rmode->viWidth;
     int height = rmode->viHeight;
@@ -138,7 +138,7 @@ Scene scene_intro() {
 
         // Clean up
         if (fading_out) {
-            slide_opacity = lrp(slide_opacity, 0, .01);
+            slide_opacity = lrp(slide_opacity, 0, .05);
 
             if (slide_opacity < .1) {
                 for (int i = 0; i < 19; i++) {
@@ -148,7 +148,7 @@ Scene scene_intro() {
                 return Scene::LetterToMunincipality;
             }
         } else {
-            slide_opacity = lrp(slide_opacity, 255, .01); // Fade-in or stay 
+            slide_opacity = lrp(slide_opacity, 255, .05); // Fade-in or stay 
         }
         
 

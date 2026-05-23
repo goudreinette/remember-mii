@@ -16,7 +16,8 @@
 
 
 Scene scene_golfmurder() {
-    
+    music::play_serguhh_loop();
+
     GRRLIB_texImg* bg = GRRLIB_LoadTexture(golfmurder_1_golfintro_jpg);
 
     int slide_i = 0;
@@ -45,6 +46,10 @@ Scene scene_golfmurder() {
 
             if (slide_i == 4) {
                 bg = GRRLIB_LoadTexture(golfmurder_4_bloodyclub_jpg);
+            }
+
+            if (slide_i == 5) {
+                return Scene::CleaningMachine;
             }
         }
 

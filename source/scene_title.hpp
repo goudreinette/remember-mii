@@ -3,8 +3,6 @@
 #include "grrlib.h"
 
 #include "remember_mii_jpg.h"
-// #include "continue_jpg.h"
-#include "continue_png.h"
 #include "serguhhhs_mind_mp3.h"
 #include "serguhh_loop_mp3.h"
 #include "cursor_png.h"
@@ -20,7 +18,6 @@ Scene scene_title() {
     music::play_serguhh_loop();
     
     GRRLIB_texImg* remembermii_img = GRRLIB_LoadTexture(remember_mii_jpg);
-    GRRLIB_texImg* continue_img = GRRLIB_LoadTexture(continue_png);
 
     int width = rmode->viWidth;
     int height = rmode->viHeight;
@@ -43,15 +40,12 @@ Scene scene_title() {
 
 
         // Continue button and cursor
-        float alpha = map(sin(i / 30.0), -1.0, 1.0, 75.0, slide_opacity);
-        // float scale = map(sin(i / 10.0), -1.0, 1.0, .9, 1.);
-        float scale = 1.;
-        GRRLIB_DrawImg(375, 377, continue_img, 0, scale, scale, RGBA(255,255,255, alpha));
+        bool hovering_continue = continue_button::draw(500, 400, i, slide_opacity, mote.x, mote.y);
         
         // Draw cursor!
         cursor::draw(mote.x, mote.y);
 
-        if (mote.a_pressed) {
+        if (mote.a_pressed && hovering_continue) {
             outro = true;
         }
 
@@ -61,7 +55,6 @@ Scene scene_title() {
 
             if (outro_i == 200) {
                 GRRLIB_FreeTexture(remembermii_img);
-                GRRLIB_FreeTexture(continue_img);
                 return Scene::Intro;
             }
         }
