@@ -44,7 +44,7 @@ namespace continue_button {
         
         if (cursor_x > (x - w / 1.5) && cursor_y > (y - h / 1.5) && cursor_x < x + w / 1.5 && cursor_y < y + h / 1.5) {
             // Hover
-            GRRLIB_DrawImg(x - offset_x, y - offset_y, continue_hover_img, 0, scale, scale, RGBA(255,255,255, alpha));
+            GRRLIB_DrawImg(x - offset_x, y - offset_y, continue_hover_img, 0, scale, scale, RGBA(255,255,255,255));
             return true;
         } else {
             // Not hover
