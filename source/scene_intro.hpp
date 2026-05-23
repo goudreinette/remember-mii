@@ -122,7 +122,7 @@ Scene scene_intro() {
         controller mote = update_wiimote();
 
         // Animate frames
-        if (i % 50 == 0 && slide_i < num_frames) {
+        if (i % 24 == 0 && slide_i < num_frames) {
             slide_i++;
             frame = GRRLIB_LoadTexture(*frames[slide_i]);
         }
