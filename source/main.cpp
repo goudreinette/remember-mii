@@ -27,9 +27,9 @@
 
 // Scenes
 #include "scene.hpp"
-#include "scene_biking.hpp"
-#include "scene_breakingupwithfriend.hpp"
-#include "scene_buyingacar.hpp"
+// #include "scene_biking.hpp"
+// #include "scene_breakingupwithfriend.hpp"
+// #include "scene_buyingacar.hpp"
 #include "scene_cleaningmachine.hpp"
 #include "scene_ending.hpp"
 #include "scene_bowling.hpp"
@@ -76,10 +76,6 @@ int main() {
       next_scene = scene_title();
     } else if (current_scene == Scene::Intro) {
       next_scene = scene_intro();
-    } else if (current_scene == Scene::BuyingACar) {
-      next_scene = scene_buyingacar();
-    } else if (current_scene == Scene::BreakingUpWithAFriend) {
-      next_scene = scene_breakingupwithafriend();
     } else if (current_scene == Scene::LetterToMunincipality) {
       next_scene = scene_lettertomunincipality();
     } else if (current_scene == Scene::LostKeyCard) {
@@ -90,15 +86,22 @@ int main() {
       next_scene = scene_golfclass();
     } else if (current_scene == Scene::GolfMurder) {
       next_scene = scene_golfmurder();
-    } else if (current_scene == Scene::Biking) {
-      next_scene = scene_biking();
     } else if (current_scene == Scene::Bowling) {
       next_scene = scene_bowling();
     } else if (current_scene == Scene::Ending) {
       next_scene = scene_ending();
-    }
+	}
+
+    // } else if (current_scene == Scene::BuyingACar) {
+    //   next_scene = scene_buyingacar();
+    // } else if (current_scene == Scene::BreakingUpWithAFriend) {
+    //   next_scene = scene_breakingupwithafriend();
+	// } else if (current_scene == Scene::Biking) {
+    //   next_scene = scene_biking();
+	// }
 
     current_scene = next_scene;
+
   }
 
   // GRRLIB_FreeTexture(fontTexture);
