@@ -24,7 +24,7 @@ Scene scene_lettertomunincipality() {
     int width = rmode->viWidth;
     int height = rmode->viHeight;
 
-    float i = 0;
+    float t = 0;
 
     bool showing_letter = false;
     float slide_opacity = 0;
@@ -32,7 +32,7 @@ Scene scene_lettertomunincipality() {
     bool viewed_letter = false;
 
     while (true) {
-        i++;
+        t++;
         slide_opacity = lrp(slide_opacity, 255, .01);
 
 
@@ -48,17 +48,14 @@ Scene scene_lettertomunincipality() {
 
         // Draw continue button
         if (showing_letter) {
-            if (mote.a_pressed) {
-                showing_letter = false;
-                viewed_letter = true;
-            }
+
         } else {
-            float alpha = map(sin(i / 30.0), -1.0, 1.0, 200.0, 255.0);
-            // float scale = map(sin(i / 10.0), -1.0, 1.0, .9, 1.);
+            float alpha = map(sin(t / 30.0), -1.0, 1.0, 200.0, 255.0);
+            // float scale = map(sin(t / 10.0), -1.0, 1.0, .9, 1.);
             float scale = 1.;
             // GRRLIB_DrawImg(102, 377, continue_img, 0, scale, scale, RGBA(255,255,255,alpha));
 
-            // if (i % 120 < 60) {
+            // if (t % 120 < 60) {
 
             // } else {
             //     GRRLIB_DrawImg(100, 325, continue_img, 0, .9, .9, RGBA(255,255,255,120));  // Draw a jpeg
@@ -85,12 +82,25 @@ Scene scene_lettertomunincipality() {
             }
         }
 
-
-        // Next scene
-        if (mote.a_pressed && viewed_letter) {
-            GRRLIB_FreeTexture(writing_img);
-            GRRLIB_FreeTexture(letter_img);
-            return Scene::GolfClass;
+        
+        // Continue button. Clicking stars fadeout, after which next step in the dialogue.
+        float continue_x = showing_letter ? 520 : 213;
+        bool continue_hover = continue_button::draw(continue_x, 406, t, slide_opacity, mote.x, mote.y);
+        if (continue_hover && mote.a_pressed) {
+            if (viewed_letter) {
+                // Next scene
+                GRRLIB_FreeTexture(writing_img);
+                GRRLIB_FreeTexture(letter_img);
+                return Scene::GolfClass;
+            } else {
+                // Show and hide the letter
+                if (showing_letter) {
+                    showing_letter = false;
+                    viewed_letter = true;
+                } else {
+                    showing_letter = true;
+                }
+            }
         }
      
         cursor::draw(mote.x, mote.y);
