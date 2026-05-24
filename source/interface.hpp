@@ -31,6 +31,7 @@ namespace textbox {
 namespace continue_button {
     GRRLIB_texImg* continue_img = GRRLIB_LoadTexture(continue_png);
     GRRLIB_texImg* continue_hover_img = GRRLIB_LoadTexture(continue_hover_png);
+    float hover_alpha = 0;
 
     bool draw(float x, float y, float t, float max_opacity, float cursor_x, float cursor_y) {
         float alpha = std::min(map(sin(t / 30.0), -1.0, 1.0, 200.0, max_opacity), max_opacity);
@@ -41,14 +42,20 @@ namespace continue_button {
         float offset_x = 200 * scale / 2;
         float offset_y = 68 * scale / 2;
         
+        // Base
+        GRRLIB_DrawImg(x - offset_x, y - offset_y, continue_img, 0, scale, scale, RGBA(255,255,255, alpha));
+        // Hover
+        GRRLIB_DrawImg(x - offset_x, y - offset_y, continue_hover_img, 0, scale, scale, RGBA(255,255,255,hover_alpha));
         
-        if (cursor_x > (x - w / 1.5) && cursor_y > (y - h / 1.5) && cursor_x < x + w / 1.5 && cursor_y < y + h / 1.5) {
+        bool hover = cursor_x > (x - w / 1.5) && cursor_y > (y - h / 1.5) && cursor_x < x + w / 1.5 && cursor_y < y + h / 1.5;
+
+        if (hover) {
             // Hover
-            GRRLIB_DrawImg(x - offset_x, y - offset_y, continue_hover_img, 0, scale, scale, RGBA(255,255,255,255));
+            hover_alpha = 255;
             return true;
         } else {
             // Not hover
-            GRRLIB_DrawImg(x - offset_x, y - offset_y, continue_img, 0, scale, scale, RGBA(255,255,255, alpha));
+            hover_alpha = lrp(hover_alpha, 0.0, .1);
             return false;
         }
     }
