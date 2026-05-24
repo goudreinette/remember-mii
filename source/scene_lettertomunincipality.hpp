@@ -105,6 +105,9 @@ Scene scene_lettertomunincipality() {
             if (continue_hover && mote.a_pressed) {
                 if (viewed_letter) {
                     // Next scene
+                    // loading::draw();
+                    // GRRLIB_Render();
+
                     GRRLIB_FreeTexture(writing_img);
                     GRRLIB_FreeTexture(letter_img);
                     return Scene::GolfClass;

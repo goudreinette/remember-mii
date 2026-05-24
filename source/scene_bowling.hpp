@@ -69,10 +69,10 @@ Scene scene_bowling() {
             if (slide_opacity < 30) {
                 transition_down = false;
                 slide_i++;
+                GRRLIB_FreeTexture(frame);
 
                 // Dialogue and choice logic comes here
                 // -----
-
                 
                 if (slide_i > num_frames) {
                     return Scene::GolfMurder;

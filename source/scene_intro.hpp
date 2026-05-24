@@ -123,6 +123,7 @@ Scene scene_intro() {
         // Animate frames
         if (i % 24 == 0 && slide_i < num_frames) {
             slide_i++;
+            GRRLIB_FreeTexture(frame);
             frame = GRRLIB_LoadTexture(*frames[slide_i]);
         }
 
@@ -139,9 +140,11 @@ Scene scene_intro() {
             slide_opacity = lrp(slide_opacity, 0, .05);
 
             if (slide_opacity < .1) {
-                for (int i = 0; i < 19; i++) {
-                    // GRRLIB_FreeTexture(frames[i]);
-                }
+                loading::draw();
+                GRRLIB_Render();
+
+                // for (int i = 0; i < 19; i++) {
+                // }
                 
                 return Scene::LetterToMunincipality;
             }

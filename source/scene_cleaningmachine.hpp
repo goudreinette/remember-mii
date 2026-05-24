@@ -27,19 +27,20 @@
 Scene scene_cleaningmachine() {
     music::play_spannendloop();
 
-    GRRLIB_texImg* clean[4] = {
-        GRRLIB_LoadTexture(clean1_jpg),
-        GRRLIB_LoadTexture(clean2_jpg),
-        GRRLIB_LoadTexture(clean3_jpg),
-        GRRLIB_LoadTexture(clean4_jpg)
+    int num_frames = 4;
+    const uint8_t (*frames[4])[] = {
+        &clean1_jpg,
+        &clean2_jpg,
+        &clean3_jpg,
+        &clean4_jpg,
     };
-    
-    GRRLIB_texImg* continue_img = GRRLIB_LoadTexture(continue_jpg);
 
 
     int slide_i = 0;
     float slide_opacity = 0;
     float timer;
+
+    GRRLIB_texImg* frame = GRRLIB_LoadTexture(*frames[slide_i]);
 
     bool is_intro = true;
     bool transition_down = false;
@@ -56,7 +57,10 @@ Scene scene_cleaningmachine() {
             if (slide_opacity < 30) {
                 transition_down = false;
                 
+                GRRLIB_FreeTexture(frame);
                 slide_i++;
+                frame = GRRLIB_LoadTexture(*frames[slide_i]);
+
                 
                 if (slide_i == 5) {
                     return Scene::Hotel;
@@ -75,7 +79,7 @@ Scene scene_cleaningmachine() {
 
         music::check_loop();
 
-        GRRLIB_DrawImg(0, 0, clean[slide_i], 0, 1, 1, RGBA(255,255,255, slide_opacity));  // Draw a jpeg
+        GRRLIB_DrawImg(0, 0, frame, 0, 1, 1, RGBA(255,255,255, slide_opacity));  // Draw a jpeg
         GRRLIB_Render();
     }
 }

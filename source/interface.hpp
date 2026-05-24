@@ -9,6 +9,7 @@
 // Graphics
 #include "continue_png.h"
 #include "continue_hover_png.h"
+#include "loading_jpg.h"
 
 
 // Includes
@@ -107,6 +108,20 @@ struct ChoiceButton {
         }
     }
 };
+
+
+namespace loading {
+    GRRLIB_texImg* loading = GRRLIB_LoadTexture(loading_jpg);
+
+    void draw() {
+        GRRLIB_FillScreen(RGBA(0,0,0,255));
+        GRRLIB_DrawImg(0,0,loading, 0, 1, 1, RGBA(255,255,255, 255));
+    }
+
+    void hide() {
+
+    }
+}
 
 
 

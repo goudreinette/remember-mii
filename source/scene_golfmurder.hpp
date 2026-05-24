@@ -9,7 +9,7 @@
 
 // Images
 #include "golfmurder_1_golfintro_jpg.h"
-#include "golfmurder_1_5_text_julius_png.h"
+#include "golfmurder_1_5_text_julius_jpg.h"
 #include "golfmurder_2_anger_jpg.h"
 #include "golfmurder_3_whack_jpg.h"
 #include "golfmurder_4_bloodyclub_jpg.h"
@@ -33,7 +33,7 @@ Scene scene_golfmurder() {
             slide_i++;
 
             if (slide_i == 1) {
-                bg = GRRLIB_LoadTexture(golfmurder_1_5_text_julius_png);
+                bg = GRRLIB_LoadTexture(golfmurder_1_5_text_julius_jpg);
             }
 
             if (slide_i == 2) {
@@ -49,6 +49,7 @@ Scene scene_golfmurder() {
             }
 
             if (slide_i == 5) {
+                GRRLIB_FreeTexture(bg);
                 return Scene::CleaningMachine;
             }
         }
