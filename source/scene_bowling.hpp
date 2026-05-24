@@ -93,7 +93,7 @@ Scene scene_bowling() {
 
         GRRLIB_DrawImg(0, 0, frame, 0, 1, 1, RGBA(255,255,255, slide_opacity));  // Draw background
 
-        bool continue_hover = continue_button::draw(200, 400, t, slide_opacity, mote.x, mote.y);
+        bool continue_hover = continue_button::draw(150, 425, t, slide_opacity, mote.x, mote.y);
 
         cursor::draw(mote.x, mote.y);
         music::check_loop();

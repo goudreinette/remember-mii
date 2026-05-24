@@ -130,7 +130,7 @@ Scene scene_hotel() {
         
 
         // Continue button. Clicking stars fadeout, after which next step in the dialogue.
-        bool continue_hover = continue_button::draw(550, 400, t, continue_opacity, mote.x, mote.y);
+        bool continue_hover = continue_button::draw(550, 425, t, continue_opacity, mote.x, mote.y);
         if (continue_hover && mote.a_pressed) {
             transition_down = true;
         }
