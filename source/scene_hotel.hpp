@@ -2,13 +2,22 @@
 
 #include "grrlib.h"
 #include "colors.hpp"
+#include "interface.hpp"
 
 #include "scene.hpp"
 
 #include "hotelbackground_jpg.h"
 #include "hotelbackground_with_characters_jpg.h"
 #include "hotel_serguhhh_png.h"
+#include "hotel_serguhhh_aggro_png.h"
+#include "hotel_serguhhh_fight_png.h"
 #include "hotel_alisha_png.h"
+#include "hotel_alisha_fight_png.h"
+
+#include "hotel_button_fight_png.h"
+#include "hotel_button_fight_hover_png.h"
+#include "hotel_button_flight_png.h"
+#include "hotel_button_flight_hover_png.h"
 
 #include "hotel_balloon_1_png.h"
 #include "hotel_textballoon_serguhhh_1_png.h"
@@ -36,6 +45,7 @@ enum class Character {
 // };
 
 
+
 Scene scene_hotel() {
     music::play_serguhh_loop();
 
@@ -58,15 +68,11 @@ Scene scene_hotel() {
     //     TextBalloon(Character::Serguhhh, hotel_textballoon_serguhhh_1_png)
     // };
 
-    
     // Text balloon 2
 
     // Choice 1
 
     // Choice 2
-
-
-
 
 
     // Characters
@@ -78,7 +84,16 @@ Scene scene_hotel() {
 
     // Continue button
     float continue_opacity = 0;
-    
+
+    // Fight and flight buttons
+    bool show_fight_flight = false;
+    float fight_flight_opacity = 0.0;
+
+    ChoiceButton fight_button = ChoiceButton(GRRLIB_LoadTexture(hotel_button_fight_png), GRRLIB_LoadTexture(hotel_button_fight_hover_png), 200, 50);
+    ChoiceButton flight_button = ChoiceButton(GRRLIB_LoadTexture(hotel_button_flight_png), GRRLIB_LoadTexture(hotel_button_flight_hover_png), 200, 50);
+
+
+
     // Animation timer
     int t = 0;
 
@@ -88,7 +103,7 @@ Scene scene_hotel() {
     float text_balloon_opacity = 0.0;
     float text_balloon_y = -25;
     float text_balloon_x = -50;
-    int dialogue_step = 0;
+    int dialogue_step = 8;
 
     
     while (true) {
@@ -113,7 +128,11 @@ Scene scene_hotel() {
             text_balloon_opacity = lerp(text_balloon_opacity, 255, transition_in_speed);
         }
         if (t > 140) {
-            continue_opacity = lerp(continue_opacity, 255, transition_in_speed);
+            if (show_fight_flight) {
+                continue_opacity = lerp(continue_opacity, 0, transition_in_speed);
+            } else {
+                continue_opacity = lerp(continue_opacity, 255, transition_in_speed);
+            }
         }
 
 
@@ -130,7 +149,7 @@ Scene scene_hotel() {
         
 
         // Continue button. Clicking stars fadeout, after which next step in the dialogue.
-        bool continue_hover = continue_button::draw(550, 425, t, continue_opacity, mote.x, mote.y);
+        bool continue_hover = continue_button::draw(550, 425, t, continue_opacity, show_fight_flight ? 2000 : mote.x, mote.y);
         if (continue_hover && mote.a_pressed) {
             transition_down = true;
         }
@@ -186,9 +205,10 @@ Scene scene_hotel() {
                     if (dialogue_step == 9) { // ...
                         text_balloon = GRRLIB_LoadTexture(hotel_textballoon_serguhhh_5_png);
                         currently_speaking = Character::Serguhhh;
+                        serguhhh = GRRLIB_LoadTexture(hotel_serguhhh_aggro_png);
+                        show_fight_flight = true;
                     }
                     if (dialogue_step == 10) { // [FIGHT] [FLIGHT]
-                        // TODO
                     }
 
                     
@@ -206,7 +226,36 @@ Scene scene_hotel() {
         int text_balloon_x = currently_speaking == Character::Alisha ? 175 : -50;
         GRRLIB_DrawImg(text_balloon_x, text_balloon_y, text_balloon, 0, 1, 1, RGBA(255,255,255, text_balloon_opacity)); 
 
-        // Choices
+        // Fight or flight
+        if (show_fight_flight) {
+            fight_button.hover_active = true;
+            flight_button.hover_active = true;
+            fight_flight_opacity = lerp(fight_flight_opacity, 255, .3);
+        } else {
+            fight_button.hover_active = false;
+            flight_button.hover_active = false;
+            fight_flight_opacity = lerp(fight_flight_opacity, 0, .3);
+        }
+
+        bool fight_hover = fight_button.draw(500, 360, t, fight_flight_opacity, mote.x, mote.y);
+        bool flight_hover = flight_button.draw(500, 410, t + 30, fight_flight_opacity, mote.x, mote.y);
+
+        if (fight_hover && mote.a_pressed) {
+            text_balloon = GRRLIB_LoadTexture(hotel_textballoon_alisha1_png);
+            // fight_button.choose();
+            fight_button.chosen = true;
+            // return Scene::Title;
+        }
+
+        if (flight_hover && mote.a_pressed) {
+            flight_button.choose();
+            flight_button.chosen = true;
+            // return Scene::Title;
+        }
+        
+        
+        // GRRLIB_DrawImg(400, 340, fight_button, 0, 1, 1, RGBA(255,255,255,fight_flight_opacity));
+        // GRRLIB_DrawImg(400, 390, flight_button, 0, 1, 1, RGBA(255,255,255,fight_flight_opacity));
 
 
         cursor::draw(mote.x, mote.y);
