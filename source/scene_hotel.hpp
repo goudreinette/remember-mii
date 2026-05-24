@@ -96,6 +96,8 @@ Scene scene_hotel() {
 
     // Animation timer
     int t = 0;
+    int after_choice_delay = 0;
+    int after_continue_delay = 0;
 
     // Text balloons
     Character currently_speaking = Character::Serguhhh;
@@ -103,7 +105,7 @@ Scene scene_hotel() {
     float text_balloon_opacity = 0.0;
     float text_balloon_y = -25;
     float text_balloon_x = -50;
-    int dialogue_step = 8;
+    int dialogue_step = 0;
 
     
     while (true) {
@@ -128,7 +130,7 @@ Scene scene_hotel() {
             text_balloon_opacity = lerp(text_balloon_opacity, 255, transition_in_speed);
         }
         if (t > 140) {
-            if (show_fight_flight) {
+            if (show_fight_flight || ((fight_button.chosen || flight_button.chosen) && after_choice_delay < 180)) {
                 continue_opacity = lerp(continue_opacity, 0, transition_in_speed);
             } else {
                 continue_opacity = lerp(continue_opacity, 255, transition_in_speed);
@@ -152,19 +154,23 @@ Scene scene_hotel() {
         bool continue_hover = continue_button::draw(550, 425, t, continue_opacity, show_fight_flight ? 2000 : mote.x, mote.y);
         if (continue_hover && mote.a_pressed) {
             transition_down = true;
+            after_continue_delay = 0;
         }
 
         // Dialogue logic
         if (t > 200) {
-            if (!transition_down) {
+            if (fight_button.chosen || transition_down) {
+                text_balloon_opacity = lrp(text_balloon_opacity, 0.0, .1);
+                text_balloon_y = lrp(text_balloon_y, -25, .1);
+            } else {
                 text_balloon_opacity = lrp(text_balloon_opacity, 255, .1);
                 text_balloon_y = lrp(text_balloon_y, -50, .1);
             }
 
             if (transition_down) {
-                text_balloon_opacity = lrp(text_balloon_opacity, 0.0, .1);
-                text_balloon_y = lrp(text_balloon_y, -25, .1);
-                if (text_balloon_opacity < 10) {
+                after_continue_delay++;
+
+                if (after_continue_delay > 60) {
                     transition_down = false;
                     
                     dialogue_step++;
@@ -240,17 +246,26 @@ Scene scene_hotel() {
         bool fight_hover = fight_button.draw(500, 360, t, fight_flight_opacity, mote.x, mote.y);
         bool flight_hover = flight_button.draw(500, 410, t + 30, fight_flight_opacity, mote.x, mote.y);
 
+        // Fight chosen!
         if (fight_hover && mote.a_pressed) {
-            text_balloon = GRRLIB_LoadTexture(hotel_textballoon_alisha1_png);
+            serguhhh = GRRLIB_LoadTexture(hotel_serguhhh_fight_png);
+            alisha = GRRLIB_LoadTexture(hotel_alisha_fight_png);
             // fight_button.choose();
             fight_button.chosen = true;
+            show_fight_flight = false;
+            // return Scene::Title;
+        }
+        
+
+        // Flight chosen!
+        if (flight_hover && mote.a_pressed) {
+            flight_button.chosen = true;
+            show_fight_flight = false;
             // return Scene::Title;
         }
 
-        if (flight_hover && mote.a_pressed) {
-            flight_button.choose();
-            flight_button.chosen = true;
-            // return Scene::Title;
+        if (fight_button.chosen || flight_button.chosen) {
+            after_choice_delay++;
         }
         
         
