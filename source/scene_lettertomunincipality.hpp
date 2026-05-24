@@ -33,7 +33,7 @@ Scene scene_lettertomunincipality() {
 
     while (true) {
         t++;
-        slide_opacity = lrp(slide_opacity, 255, .01);
+        slide_opacity = lrp(slide_opacity, 255, slide_speed);
 
 
         controller mote = update_wiimote();

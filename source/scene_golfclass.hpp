@@ -41,24 +41,24 @@ Scene scene_golfclass() {
     bool is_intro = true;
     bool transition_down = false;
     
-    GRRLIB_texImg* frame;
+    GRRLIB_texImg* frame = GRRLIB_LoadTexture(*frames[slide_i]);
 
 
     while (true) {
         controller mote = update_wiimote();
 
         if (!transition_down) {
-            slide_opacity = lrp(slide_opacity, 255, .01);
+            slide_opacity = lrp(slide_opacity, 255, .03);
         }
 
         if (transition_down) {
-            slide_opacity = lrp(slide_opacity, 0, .01);
+            slide_opacity = lrp(slide_opacity, 0, .03);
             if (slide_opacity < 30) {
                 transition_down = false;
                 slide_i++;
 
                 
-                if (slide_i > num_frames) {
+                if (slide_i >= num_frames) {
                     return Scene::Bowling;
                 }
 
@@ -67,7 +67,7 @@ Scene scene_golfclass() {
         }
 
         
-
+        
         if (mote.a_pressed) {
             transition_down = true;
         }

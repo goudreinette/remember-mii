@@ -48,11 +48,11 @@ Scene scene_cleaningmachine() {
     while (true) {
 
         if (!transition_down) {
-            slide_opacity = lrp(slide_opacity, 255, .01);
+            slide_opacity = lrp(slide_opacity, 255, slide_speed);
         }
 
         if (transition_down) {
-            slide_opacity = lrp(slide_opacity, 0, .01);
+            slide_opacity = lrp(slide_opacity, 0, slide_speed);
             if (slide_opacity < 30) {
                 transition_down = false;
                 

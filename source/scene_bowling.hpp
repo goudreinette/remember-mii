@@ -50,27 +50,29 @@ Scene scene_bowling() {
 
     int slide_i = 0;
     float slide_opacity = 0;
-    float timer;
+    float t = 0;
 
     bool is_intro = true;
     bool transition_down = false;
     
-    GRRLIB_texImg* frame;
+    GRRLIB_texImg* frame = GRRLIB_LoadTexture(*frames[slide_i]);
 
 
     while (true) {
+        t++;
+
         controller mote = update_wiimote();
 
 
         if (transition_down) {
-            slide_opacity = lrp(slide_opacity, 0, .01);
+            slide_opacity = lrp(slide_opacity, 0, slide_speed);
             if (slide_opacity < 30) {
                 transition_down = false;
                 slide_i++;
 
-                // Game logic comes here
+                // Dialogue and choice logic comes here
                 // -----
-                
+
                 
                 if (slide_i > num_frames) {
                     return Scene::GolfMurder;
@@ -79,7 +81,7 @@ Scene scene_bowling() {
                 frame = GRRLIB_LoadTexture(*frames[slide_i]);
             }
         } else {
-            slide_opacity = lrp(slide_opacity, 255, .01);
+            slide_opacity = lrp(slide_opacity, 255, slide_speed);
         }
 
 
@@ -90,6 +92,8 @@ Scene scene_bowling() {
         
 
         GRRLIB_DrawImg(0, 0, frame, 0, 1, 1, RGBA(255,255,255, slide_opacity));  // Draw background
+
+        bool continue_hover = continue_button::draw(200, 400, t, slide_opacity, mote.x, mote.y);
 
         cursor::draw(mote.x, mote.y);
         music::check_loop();

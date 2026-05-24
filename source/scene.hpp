@@ -1,6 +1,8 @@
 #pragma once
 
 
+const float slide_speed = 0.03;
+
 
 enum class Scene {
     Title, 
