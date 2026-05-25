@@ -7,6 +7,7 @@
 #include "scene.hpp"
 
 #include "hotelbackground_jpg.h"
+#include "hotel_finalscene_jpg.h"
 #include "hotelbackground_with_characters_jpg.h"
 #include "hotel_serguhhh_png.h"
 #include "hotel_serguhhh_aggro_png.h"
@@ -51,6 +52,8 @@ Scene scene_hotel() {
 
 
     GRRLIB_texImg* background = GRRLIB_LoadTexture(hotelbackground_jpg);
+    // GRRLIB_texImg* flight = GRRLIB_LoadTexture(hotel);
+    
     // GRRLIB_texImg* background_with_characters = GRRLIB_LoadTexture(hotelbackground_with_characters_jpg);
 
     // Serguhh? (separate)
@@ -107,7 +110,11 @@ Scene scene_hotel() {
     float text_balloon_x = -50;
     int dialogue_step = 0;
 
+    float slide_opacity = 255.0;
     
+    bool bg_transition_down = false;
+
+
     while (true) {
         t++;
         
@@ -115,25 +122,33 @@ Scene scene_hotel() {
 
         // Transition in
         float transition_in_speed = 0.05;
-        serguhhh_opacity = lerp(serguhhh_opacity, 255, transition_in_speed);
-        serguhhh_y = lerp(serguhhh_y, 0, transition_in_speed);
+        if (!flight_button.chosen) {
+            serguhhh_opacity = lrp(serguhhh_opacity, 255, transition_in_speed);
+            serguhhh_y = lrp(serguhhh_y, 0, transition_in_speed);
+        }
 
         // Wait before alisha jumps in
-        if (t > 12) {
-            alisha_opacity = lerp(alisha_opacity, 255, transition_in_speed);
-            alisha_y = lerp(alisha_y, 0, transition_in_speed);
+        if (t > 12 && !flight_button.chosen) {
+            alisha_opacity = lrp(alisha_opacity, 255, transition_in_speed);
+            alisha_y = lrp(alisha_y, 0, transition_in_speed);
+        }
+
+        if (flight_button.chosen ) {
+            alisha_opacity = serguhhh_opacity = text_balloon_opacity =  lrp(alisha_opacity, 0, slide_speed);
+            alisha_y = serguhhh_y = lrp(alisha_y, 50, transition_in_speed);
+            text_balloon_y = lrp(text_balloon_y, -50, .1);
         }
 
         // Wait before text balloon
-        if (t > 120 && t < 200) {
+        if ((t > 120 && t < 200) && !flight_button.chosen) {
             text_balloon_y = lrp(text_balloon_y, -50, .1);
-            text_balloon_opacity = lerp(text_balloon_opacity, 255, transition_in_speed);
+            text_balloon_opacity = lrp(text_balloon_opacity, 255, transition_in_speed);
         }
         if (t > 140) {
             if (show_fight_flight || ((fight_button.chosen || flight_button.chosen) && after_choice_delay < 180)) {
-                continue_opacity = lerp(continue_opacity, 0, transition_in_speed);
+                continue_opacity = lrp(continue_opacity, 0, transition_in_speed);
             } else {
-                continue_opacity = lerp(continue_opacity, 255, transition_in_speed);
+                continue_opacity = lrp(continue_opacity, 255, transition_in_speed);
             }
         }
 
@@ -141,7 +156,7 @@ Scene scene_hotel() {
 
         // Draw background and characters 
         // Background  
-        GRRLIB_DrawImg(0, 0, background, 0, 1, 1, RGBA(255,255,255, 255)); 
+        GRRLIB_DrawImg(0, 0, background, 0, 1, 1, RGBA(255,255,255, slide_opacity)); 
         // GRRLIB_DrawImg(0, 0, background_with_characters, 0, 1, 1, RGBA(255,255,255, characters_opacity));  
 
         // Characters
@@ -170,8 +185,17 @@ Scene scene_hotel() {
             if (transition_down) {
                 after_continue_delay++;
 
+                if (flight_button.chosen) {
+                    slide_opacity = lerp(slide_opacity, 0, slide_speed);
+                }
+
                 if (after_continue_delay > 60) {
                     transition_down = false;
+
+                    if (flight_button.chosen || fight_button.chosen) {
+                        return Scene::Ending;
+                    }
+                    
                     
                     dialogue_step++;
 
@@ -221,7 +245,9 @@ Scene scene_hotel() {
                     if (dialogue_step == 12) { // 
                         // return Scene::Hotel;
                     }
-                }
+                } 
+            } else {
+                // slide_opacity = lerp(slide_opacity, 255, slide_speed);
             }
         }
         
@@ -236,11 +262,11 @@ Scene scene_hotel() {
         if (show_fight_flight) {
             fight_button.hover_active = true;
             flight_button.hover_active = true;
-            fight_flight_opacity = lerp(fight_flight_opacity, 255, .3);
+            fight_flight_opacity = lrp(fight_flight_opacity, 255, .3);
         } else {
             fight_button.hover_active = false;
             flight_button.hover_active = false;
-            fight_flight_opacity = lerp(fight_flight_opacity, 0, .3);
+            fight_flight_opacity = lrp(fight_flight_opacity, 0, .3);
         }
 
         bool fight_hover = fight_button.draw(500, 360, t, fight_flight_opacity, mote.x, mote.y);
@@ -261,14 +287,31 @@ Scene scene_hotel() {
         if (flight_hover && mote.a_pressed) {
             flight_button.chosen = true;
             show_fight_flight = false;
+            // transition_down = true;
+            bg_transition_down = true;
             // return Scene::Title;
         }
 
         if (fight_button.chosen || flight_button.chosen) {
             after_choice_delay++;
         }
+
+        if (flight_button.chosen) {
+            if (bg_transition_down) {
+                slide_opacity = lrp(slide_opacity, 0, slide_speed);
+                if (slide_opacity < 10) {
+                    bg_transition_down = false;
+                    // GRRLIB_FreeTexture(background);
+                    // Choices
+                    background =  GRRLIB_LoadTexture(hotel_finalscene_jpg);
+                }
+            } else {
+                slide_opacity = lrp(slide_opacity, 255, slide_speed);
+            }
+        }
         
         
+
         // GRRLIB_DrawImg(400, 340, fight_button, 0, 1, 1, RGBA(255,255,255,fight_flight_opacity));
         // GRRLIB_DrawImg(400, 390, flight_button, 0, 1, 1, RGBA(255,255,255,fight_flight_opacity));
 
