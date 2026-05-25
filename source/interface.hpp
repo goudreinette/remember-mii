@@ -168,7 +168,7 @@ namespace continue_button {
         } else {
             alpha = std::min(map(sin(t / 30.0), -1.0, 1.0, 200.0, max_opacity), max_opacity);
             // float scale = map(sin(i / 10.0), -1.0, 1.0, .9, 1.);
-            scale = 1.;//map(sin(t / 30.0), -1.0, 1.0, 1.0, 1.1);        
+            scale = map(sin(t / 30.0), -1.0, 1.0, 1.0, 1.1);        
         }
 
         offset_x = w * scale / 2;
