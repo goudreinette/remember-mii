@@ -109,7 +109,7 @@ Scene scene_lettertomunincipality() {
                 if (viewed_letter) {
                     // Next scene
                     // loading::draw();
-                    // GRRLIB_Render();
+                    GRRLIB_Render();
                     outro = true;
                     continue_button::choose();
                     
@@ -127,13 +127,13 @@ Scene scene_lettertomunincipality() {
         
         if (outro) {
             outro_i++;
+        }
 
-            if (outro_i > 60) {
-                continue_button::reset_chosen();
-                GRRLIB_FreeTexture(writing_img);
-                GRRLIB_FreeTexture(letter_img);
-                return Scene::GolfClass;
-            }
+        if (outro_i > 60) {
+            GRRLIB_FreeTexture(writing_img);
+            GRRLIB_FreeTexture(letter_img);
+            continue_button::reset_chosen();
+            return Scene::GolfClass;
         }
      
         cursor::draw(mote.x, mote.y);

@@ -135,11 +135,11 @@ namespace continue_button {
     float chosen_alpha = 255;
     float chosen_scale = 1.;
     
-    bool choose() {
+    void choose() {
         chosen = true;
     }
 
-    bool reset_chosen() {
+    void reset_chosen() {
         chosen = false;
         chosen_alpha = 255;
         chosen_scale = 1.;
