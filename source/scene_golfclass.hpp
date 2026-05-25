@@ -57,6 +57,7 @@ Scene scene_golfclass() {
                 transition_down = false;
                 slide_i++;
 
+                GRRLIB_FreeTexture(frame);
                 
                 if (slide_i >= num_frames) {
                     return Scene::Bowling;

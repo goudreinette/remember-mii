@@ -62,10 +62,9 @@ Scene scene_intro() {
     int width = rmode->viWidth;
     int height = rmode->viHeight;
 
-    GRRLIB_texImg* frame;
 
     int num_frames = 39;
-    const uint8_t (*frames[39])[] = {
+    const uint8_t (*frames[40])[] = {
         &intro_1_jpg,
         &intro_2_jpg,
         &intro_3_jpg,
@@ -104,6 +103,7 @@ Scene scene_intro() {
         &intro_36_jpg,
         &intro_37_jpg,
         &intro_38_jpg,
+        &intro_39_jpg,
         &intro_39_jpg
     };
 
@@ -113,6 +113,9 @@ Scene scene_intro() {
     float slide_opacity = 0;
 
     bool fading_out = false;
+
+    GRRLIB_texImg* frame = GRRLIB_LoadTexture(*frames[slide_i]);
+
 
 
     while (true) {
@@ -140,9 +143,7 @@ Scene scene_intro() {
             slide_opacity = lrp(slide_opacity, 0, .05);
 
             if (slide_opacity < .1) {
-                loading::draw();
-                GRRLIB_Render();
-
+                
                 // for (int i = 0; i < 19; i++) {
                 // }
                 

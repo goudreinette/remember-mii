@@ -43,9 +43,14 @@ Scene scene_golfmurder() {
         if (transition_down) {
             slide_opacity = lrp(slide_opacity, 0, slide_speed);
             if (slide_opacity < 30) {
+                GRRLIB_FreeTexture(frame);
+
                 transition_down = false;
+
                 slide_i = slide_i + 1;
-                // GRRLIB_FreeTexture(frame);
+
+                frame = GRRLIB_LoadTexture(*frames[slide_i]);
+
 
                 // Dialogue and choice logic comes here
                 // -----
@@ -53,8 +58,6 @@ Scene scene_golfmurder() {
                 if (slide_i == num_frames) {
                     return Scene::CleaningMachine;
                 }
-
-                frame = GRRLIB_LoadTexture(*frames[slide_i]);
             }
         } else {
             slide_opacity = lrp(slide_opacity, 255, slide_speed);

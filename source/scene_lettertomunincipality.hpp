@@ -19,7 +19,6 @@
 Scene scene_lettertomunincipality() {    
     GRRLIB_texImg* writing_img = GRRLIB_LoadTexture(letter_writing_scene_jpg);;
     GRRLIB_texImg* letter_img =  GRRLIB_LoadTexture(the_letter_itself_jpg);;
-    GRRLIB_texImg* continue_img = GRRLIB_LoadTexturePNG(continue_png);
 
     int width = rmode->viWidth;
     int height = rmode->viHeight;
@@ -108,7 +107,7 @@ Scene scene_lettertomunincipality() {
             if (continue_hover && mote.a_pressed) {
                 if (viewed_letter) {
                     // Next scene
-                    // loading::draw();
+                    // 
                     GRRLIB_Render();
                     outro = true;
                     continue_button::choose();

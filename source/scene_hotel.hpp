@@ -196,8 +196,10 @@ Scene scene_hotel() {
                         return Scene::Ending;
                     }
                     
-                    
                     dialogue_step++;
+
+                    GRRLIB_FreeTexture(text_balloon);
+
 
                     // Next step in the dialogue
                     if (dialogue_step == 1) { // "ID?"
