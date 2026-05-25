@@ -62,7 +62,7 @@ Scene scene_cleaningmachine() {
                 frame = GRRLIB_LoadTexture(*frames[slide_i]);
 
                 
-                if (slide_i == 5) {
+                if (slide_i == num_frames) {
                     return Scene::Hotel;
                 }
             }

@@ -32,6 +32,9 @@ Scene scene_lettertomunincipality() {
     float letter_y = 100;
     bool viewed_letter = false;
 
+    bool outro = false;
+    int outro_i = 0;
+
     while (true) {
         t++;
         slide_opacity = lrp(slide_opacity, 255, slide_speed);
@@ -107,10 +110,9 @@ Scene scene_lettertomunincipality() {
                     // Next scene
                     // loading::draw();
                     // GRRLIB_Render();
-
-                    GRRLIB_FreeTexture(writing_img);
-                    GRRLIB_FreeTexture(letter_img);
-                    return Scene::GolfClass;
+                    outro = true;
+                    continue_button::choose();
+                    
                 } else {
                     // Show and hide the letter
                     if (showing_letter) {
@@ -123,6 +125,16 @@ Scene scene_lettertomunincipality() {
             }
         }
         
+        if (outro) {
+            outro_i++;
+
+            if (outro_i > 60) {
+                continue_button::reset_chosen();
+                GRRLIB_FreeTexture(writing_img);
+                GRRLIB_FreeTexture(letter_img);
+                return Scene::GolfClass;
+            }
+        }
      
         cursor::draw(mote.x, mote.y);
         music::check_loop();
