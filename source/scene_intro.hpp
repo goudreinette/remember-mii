@@ -5,6 +5,12 @@
 
 #include "remember_mii_jpg.h"
 #include "continue_jpg.h"
+// #include <format>
+// #include <iostream>
+// #include <string>
+// #include <stdio.h>
+// #include <stdlib.h>
+
 
 
 // Images
@@ -137,6 +143,8 @@ Scene scene_intro() {
         if (slide_i == num_frames && i > 20 * 50) {
             fading_out = true;
         }
+
+
 
         // Clean up
         if (fading_out) {

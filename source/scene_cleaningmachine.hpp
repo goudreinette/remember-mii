@@ -59,11 +59,13 @@ Scene scene_cleaningmachine() {
                 
                 GRRLIB_FreeTexture(frame);
                 slide_i++;
-                frame = GRRLIB_LoadTexture(*frames[slide_i]);
+                
 
                 
                 if (slide_i == num_frames) {
                     return Scene::Hotel;
+                } else {
+                    frame = GRRLIB_LoadTexture(*frames[slide_i]);
                 }
             }
         }

@@ -39,25 +39,22 @@ Scene scene_golfmurder() {
     while (true) {
         controller mote = update_wiimote();
 
+        SYS_Report("slide_i: %i\r", slide_i); // Log to check if
 
         if (transition_down) {
             slide_opacity = lrp(slide_opacity, 0, slide_speed);
             if (slide_opacity < 30) {
-                GRRLIB_FreeTexture(frame);
+                // GRRLIB_FreeTexture(frame);
 
                 transition_down = false;
+                slide_i++;
 
-                slide_i = slide_i + 1;
-
-                frame = GRRLIB_LoadTexture(*frames[slide_i]);
-
-
-                // Dialogue and choice logic comes here
-                // -----
                 
-                if (slide_i == num_frames) {
+                if (slide_i >= num_frames) {
                     return Scene::CleaningMachine;
                 }
+
+                frame = GRRLIB_LoadTexture(*frames[slide_i]);
             }
         } else {
             slide_opacity = lrp(slide_opacity, 255, slide_speed);

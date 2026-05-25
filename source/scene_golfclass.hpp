@@ -54,10 +54,11 @@ Scene scene_golfclass() {
         if (transition_down) {
             slide_opacity = lrp(slide_opacity, 0, .03);
             if (slide_opacity < 30) {
+                GRRLIB_FreeTexture(frame);
+
                 transition_down = false;
                 slide_i++;
 
-                GRRLIB_FreeTexture(frame);
                 
                 if (slide_i >= num_frames) {
                     return Scene::Bowling;
