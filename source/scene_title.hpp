@@ -47,6 +47,7 @@ Scene scene_title() {
 
         if (mote.a_pressed && hovering_continue) {
             outro = true;
+            continue_button::chosen = true;
         }
 
         if (outro) {
@@ -55,6 +56,7 @@ Scene scene_title() {
 
             if (outro_i == 200) {
                 GRRLIB_FreeTexture(remembermii_img);
+                continue_button::chosen = false;
                 return Scene::Intro;
             }
         }

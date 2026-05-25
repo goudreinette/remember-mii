@@ -131,6 +131,19 @@ namespace continue_button {
     float hover_alpha = 0;
     
     bool hover_active = true;
+    bool chosen = false;
+    float chosen_alpha = 255;
+    float chosen_scale = 1.;
+    
+    bool choose() {
+        chosen = true;
+    }
+
+    bool reset_chosen() {
+        chosen = false;
+        chosen_alpha = 255;
+        chosen_scale = 1.;
+    }
 
     bool draw(float x, float y, float t, float max_opacity, float cursor_x, float cursor_y) {
         float alpha = std::min(map(sin(t / 30.0), -1.0, 1.0, 200.0, max_opacity), max_opacity);
@@ -140,17 +153,47 @@ namespace continue_button {
         float h = 68;
         float offset_x = 200 * scale / 2;
         float offset_y = 68 * scale / 2;
+
+        if (chosen) { // Button has been clicked
+            SYS_Report("CHOSEN!"); // Log to check if
+
+            chosen_alpha = lrp(chosen_alpha, 0, .05);
+            alpha = chosen_alpha;
+            // float scale = map(sin(i / 10.0), -1.0, 1.0, .9, 1.);
+            chosen_scale = lrp(chosen_scale, 2., .05); // 1.;//map(sin(t / 30.0), -1.0, 1.0, 1.0, 1.1);
+            scale = chosen_scale;
+            // float w = 200;
+            // float h  = 68;
+            
+        } else {
+            alpha = std::min(map(sin(t / 30.0), -1.0, 1.0, 200.0, max_opacity), max_opacity);
+            // float scale = map(sin(i / 10.0), -1.0, 1.0, .9, 1.);
+            scale = 1.;//map(sin(t / 30.0), -1.0, 1.0, 1.0, 1.1);        
+        }
+
+        offset_x = w * scale / 2;
+        offset_y = h * scale / 2;
+        float final_x = x - offset_x;
+        float final_y = y - offset_y;
+
         
         // Base
-        GRRLIB_DrawImg(x - offset_x, y - offset_y, continue_img, 0, scale, scale, RGBA(255,255,255, alpha));
+        GRRLIB_DrawImg(final_x, final_y, continue_img, 0, scale, scale, RGBA(255,255,255, alpha));
         // Hover
-        GRRLIB_DrawImg(x - offset_x, y - offset_y, continue_hover_img, 0, scale, scale, RGBA(255,255,255,hover_alpha));
+        GRRLIB_DrawImg(final_x, final_y, continue_hover_img, 0, scale, scale, RGBA(255,255,255, chosen ? chosen_alpha : hover_alpha));
         
-        bool hover = cursor_x > (x - w / 1.5) && cursor_y > (y - h / 1.5) && cursor_x < x + w / 1.5 && cursor_y < y + h / 1.5;
+        
+        
+        bool hover = cursor_x > (x - w / 2) && cursor_y > (y - h / 2) && cursor_x < x + w / 2 && cursor_y < y + h / 2;
+
+        if (!chosen) {
+            chosen_scale = scale;
+        }
 
         if (hover && hover_active) {
             // Hover
             hover_alpha = 255;
+            // chosen = true;
             return true;
         } else {
             // Not hover
