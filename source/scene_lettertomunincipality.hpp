@@ -3,10 +3,6 @@
 
 #include "grrlib.h"
 
-#include "remember_mii_jpg.h"
-#include "continue_png.h"
-// #include "Continue_Button_Wii_png.h"
-
 #include "scene.hpp"
 #include "input.hpp"
 #include "utils.hpp"
@@ -34,7 +30,7 @@ Scene scene_lettertomunincipality() {
     bool outro = false;
     int outro_i = 0;
 
-    while (true) {
+    while (SYS_MainLoop()) {
         t++;
         slide_opacity = lrp(slide_opacity, 255, slide_speed);
 

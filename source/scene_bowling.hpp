@@ -11,8 +11,6 @@
 #include "interface.hpp"
 
 
-#include "continue_jpg.h"
-
 #include "bowling_1_jpg.h"
 #include "bowling_2_jpg.h"
 #include "bowling_3_jpg.h"
@@ -58,7 +56,7 @@ Scene scene_bowling() {
     GRRLIB_texImg* frame = GRRLIB_LoadTexture(*frames[slide_i]);
 
 
-    while (true) {
+    while (SYS_MainLoop()) {
         t++;
 
         controller mote = update_wiimote();

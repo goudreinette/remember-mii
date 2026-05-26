@@ -3,8 +3,8 @@
 #include "grrlib.h"
 #include "colors.hpp"
 #include "interface.hpp"
-
 #include "scene.hpp"
+
 
 #include "hotelbackground_jpg.h"
 #include "hotel_finalscene_jpg.h"
@@ -115,7 +115,7 @@ Scene scene_hotel() {
     bool bg_transition_down = false;
 
 
-    while (true) {
+    while (SYS_MainLoop()) {
         t++;
         
         controller mote = update_wiimote();

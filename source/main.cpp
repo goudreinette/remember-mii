@@ -71,7 +71,7 @@ int main() {
   Scene next_scene;
   cursor::load();
 
-  while (true) {
+  while(true) {
     if (current_scene == Scene::Title) {
       next_scene = scene_title();
     } else if (current_scene == Scene::Intro) {
@@ -106,5 +106,5 @@ int main() {
 
   // GRRLIB_FreeTexture(fontTexture);
   GRRLIB_Exit();  // Be a good boy, clear the memory allocated by GRRLIB
-  return 0;
+  exit(0);  // Use exit() to exit a program, do not use 'return' from main()
 }

@@ -36,7 +36,7 @@ Scene scene_golfmurder() {
     bool transition_down = false;
 
 
-    while (true) {
+    while (SYS_MainLoop()) {
         controller mote = update_wiimote();
 
         SYS_Report("slide_i: %i\r", slide_i); // Log to check if

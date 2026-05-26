@@ -7,13 +7,11 @@
 
 #include "clickshort_mp3.h"
 
+#include "cursor_png.h"
 
 
 ir_t ir1;  // infrared
 int rumbleTimer = 0;
-
-
-#include "cursor_png.h"
 
 struct controller {
     int x, y;
@@ -42,6 +40,12 @@ controller update_wiimote() {
     u32 buttonsHeld = WPAD_ButtonsHeld(0);
     WPAD_IR(WPAD_CHAN_0, &ir1);
 
+    // Leaving the game
+    if (buttonsDown & WPAD_BUTTON_HOME) {
+       GRRLIB_Exit();
+       exit(0);
+    }
+
     controller mote = {
         .x = ir1.sx - 190,
         .y = ir1.sy - 210,
@@ -55,10 +59,6 @@ controller update_wiimote() {
     if (mote.a_pressed) {
 	    MP3Player_PlayBuffer(clickshort_mp3, clickshort_mp3_size, NULL);
     }
-
-    // if (buttonsDown & WPAD_BUTTON_HOME) {
-    //     break;
-    // }
 
     return mote;
 }

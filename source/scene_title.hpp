@@ -2,16 +2,14 @@
 
 #include "grrlib.h"
 
-#include "remember_mii_jpg.h"
-#include "serguhhhs_mind_mp3.h"
-#include "serguhh_loop_mp3.h"
-#include "cursor_png.h"
-// #include "Continue_Button_Wii_png.h"
 
 #include "scene.hpp"
 #include "music.hpp"
 #include "input.hpp"
 #include "utils.hpp"
+
+#include "remember_mii_jpg.h"
+
 
 
 Scene scene_title() {
@@ -27,7 +25,7 @@ Scene scene_title() {
     bool outro = false;
     int outro_i = 0;
 
-    while (true) {
+    while (SYS_MainLoop()) {
         i++;
 
         controller mote = update_wiimote();

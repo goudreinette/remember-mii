@@ -3,14 +3,16 @@
 #include "vector"
 #include "grrlib.h"
 
-#include "remember_mii_jpg.h"
-#include "continue_jpg.h"
+#include "scene.hpp"
+#include "input.hpp"
+#include "music.hpp"
+#include "utils.hpp"
+
 // #include <format>
 // #include <iostream>
 // #include <string>
 // #include <stdio.h>
 // #include <stdlib.h>
-
 
 
 // Images
@@ -54,11 +56,6 @@
 #include "intro_38_jpg.h"
 #include "intro_39_jpg.h"
 
-
-#include "scene.hpp"
-#include "input.hpp"
-#include "music.hpp"
-#include "utils.hpp"
 
 
 
@@ -124,7 +121,7 @@ Scene scene_intro() {
 
 
 
-    while (true) {
+    while (SYS_MainLoop()) {
         i++;
 
         controller mote = update_wiimote();

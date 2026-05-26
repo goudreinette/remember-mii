@@ -3,25 +3,19 @@
 #include "grrlib.h"
 
 
+#include "scene.hpp"
+#include "input.hpp"
+#include "music.hpp"
+#include "math.hpp"
+#include "utils.hpp"
 #include "colors.hpp"
 
 #include "clean1_jpg.h"
 #include "clean2_jpg.h"
 #include "clean3_jpg.h"
 #include "clean4_jpg.h"
-#include "continue_jpg.h"
 
 
-// #include "continue_jpg.h"
-#include "serguhh_loop_mp3.h"
-#include "SERGUHH_spannedloop_mp3.h"
-// #include "Continue_Button_Wii_png.h"
-
-#include "scene.hpp"
-#include "input.hpp"
-#include "music.hpp"
-#include "math.hpp"
-#include "utils.hpp"
 
 
 Scene scene_cleaningmachine() {
@@ -46,7 +40,7 @@ Scene scene_cleaningmachine() {
     bool transition_down = false;
 
 
-    while (true) {
+    while (SYS_MainLoop()) {
 
         if (!transition_down) {
             slide_opacity = lrp(slide_opacity, 255, slide_speed);

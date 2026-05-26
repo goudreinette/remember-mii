@@ -44,7 +44,7 @@ Scene scene_golfclass() {
     GRRLIB_texImg* frame = GRRLIB_LoadTexture(*frames[slide_i]);
 
 
-    while (true) {
+    while (SYS_MainLoop()) {
         controller mote = update_wiimote();
 
         if (!transition_down) {
