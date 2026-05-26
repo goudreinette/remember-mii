@@ -61,10 +61,6 @@
 
 Scene scene_intro() {
     music::play_serguhhs_mind();
-    
-    int width = rmode->viWidth;
-    int height = rmode->viHeight;
-
 
     int num_frames = 39;
     const uint8_t (*frames[40])[] = {
@@ -124,7 +120,7 @@ Scene scene_intro() {
     while (SYS_MainLoop()) {
         i++;
 
-        controller mote = update_wiimote();
+        // controller mote = update_wiimote();
 
         // Animate frames
         if (i % 24 == 0 && slide_i < num_frames) {
@@ -148,10 +144,6 @@ Scene scene_intro() {
             slide_opacity = lrp(slide_opacity, 0, .05);
 
             if (slide_opacity < .1) {
-                
-                // for (int i = 0; i < 19; i++) {
-                // }
-                
                 return Scene::LetterToMunincipality;
             }
         } else {
@@ -163,4 +155,6 @@ Scene scene_intro() {
 
         GRRLIB_Render();
     }
+
+    return Scene::Title;
 }

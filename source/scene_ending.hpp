@@ -15,12 +15,7 @@
 
 
 Scene scene_ending() {
-    // music::play_serguhh_loop();
-    
-    GRRLIB_texImg* remembermii_img = GRRLIB_LoadTexture(credits_jpg);
-
-    int width = rmode->viWidth;
-    int height = rmode->viHeight;
+    GRRLIB_texImg* credits_img = GRRLIB_LoadTexture(credits_jpg);
 
     int i = 0;
     float slide_opacity = 0;
@@ -36,7 +31,7 @@ Scene scene_ending() {
             slide_opacity = lrp(slide_opacity, 255, .01);
         }
 
-        GRRLIB_DrawImg(-50, 0, remembermii_img, 0, 1, 1, RGBA(255,255,255, slide_opacity));  // Draw a jpeg
+        GRRLIB_DrawImg(-50, 0, credits_img, 0, 1, 1, RGBA(255,255,255, slide_opacity));  // Draw a jpeg
 
 
         // Continue button and cursor
@@ -55,14 +50,15 @@ Scene scene_ending() {
             slide_opacity = lrp(slide_opacity, 0, .01);
 
             if (outro_i == 200) {
-                GRRLIB_FreeTexture(remembermii_img);
+                GRRLIB_FreeTexture(credits_img);
                 continue_button::chosen = false;
                 return Scene::Title;
             }
         }
 
         music::check_loop();
-
         GRRLIB_Render();
     }
+
+    return Scene::Title;
 }

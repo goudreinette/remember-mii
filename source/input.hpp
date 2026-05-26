@@ -14,7 +14,7 @@ ir_t ir1;  // infrared
 int rumbleTimer = 0;
 
 struct controller {
-    int x, y;
+    float x, y;
     bool a_pressed;
     bool b_pressed;
     bool a_held;
@@ -49,10 +49,10 @@ controller update_wiimote() {
     controller mote = {
         .x = ir1.sx - 190,
         .y = ir1.sy - 210,
-        .a_pressed = buttonsDown & WPAD_BUTTON_A,
-        .b_pressed = buttonsDown & WPAD_BUTTON_B,
-        .a_held = buttonsHeld & WPAD_BUTTON_A,
-        .b_held = buttonsHeld & WPAD_BUTTON_B,
+        .a_pressed = (buttonsDown & WPAD_BUTTON_A) > 0,
+        .b_pressed = (buttonsDown & WPAD_BUTTON_B) > 0,
+        .a_held = (buttonsHeld & WPAD_BUTTON_A) > 0,
+        .b_held = (buttonsHeld & WPAD_BUTTON_B) > 0,
     };
 
 

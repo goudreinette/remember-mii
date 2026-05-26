@@ -32,16 +32,15 @@ Scene scene_cleaningmachine() {
 
     int slide_i = 0;
     float slide_opacity = 0;
-    float timer;
+    // float timer;
 
     GRRLIB_texImg* frame = GRRLIB_LoadTexture(*frames[slide_i]);
 
-    bool is_intro = true;
+    // bool is_intro = true;
     bool transition_down = false;
 
 
     while (SYS_MainLoop()) {
-
         if (!transition_down) {
             slide_opacity = lrp(slide_opacity, 255, slide_speed);
         }
@@ -53,9 +52,7 @@ Scene scene_cleaningmachine() {
                 
                 GRRLIB_FreeTexture(frame);
                 slide_i++;
-                
-
-                
+    
                 if (slide_i == num_frames) {
                     return Scene::Hotel;
                 } else {
@@ -71,11 +68,12 @@ Scene scene_cleaningmachine() {
             transition_down = true;
         }
 
-        
 
         music::check_loop();
 
         GRRLIB_DrawImg(0, 0, frame, 0, 1, 1, RGBA(255,255,255, slide_opacity));  // Draw a jpeg
         GRRLIB_Render();
     }
+
+    return Scene::Title;
 }

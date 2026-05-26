@@ -50,7 +50,7 @@ Scene scene_bowling() {
     float slide_opacity = 0;
     float t = 0;
 
-    bool is_intro = true;
+    // bool is_intro = true;
     bool transition_down = false;
     
     GRRLIB_texImg* frame = GRRLIB_LoadTexture(*frames[slide_i]);
@@ -96,11 +96,14 @@ Scene scene_bowling() {
 
         GRRLIB_DrawImg(0, 0, frame, 0, 1, 1, RGBA(255,255,255, slide_opacity));  // Draw background
 
-        bool continue_hover = continue_button::draw(150, 425, t, slide_opacity, mote.x, mote.y);
+        // Will be used later
+        // bool continue_hover = continue_button::draw(150, 425, t, slide_opacity, mote.x, mote.y);
 
         cursor::draw(mote.x, mote.y);
         music::check_loop();
 
         GRRLIB_Render();
     }
+
+    return Scene::Title;
 }

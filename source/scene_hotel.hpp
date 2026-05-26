@@ -79,7 +79,6 @@ Scene scene_hotel() {
 
 
     // Characters
-    float characters_opacity = 0;
     float serguhhh_opacity = 0;
     float serguhhh_y = 300;
     float alisha_opacity = 0;
@@ -107,7 +106,6 @@ Scene scene_hotel() {
     bool transition_down = false;
     float text_balloon_opacity = 0.0;
     float text_balloon_y = -25;
-    float text_balloon_x = -50;
     int dialogue_step = 0;
 
     float slide_opacity = 255.0;
@@ -323,4 +321,6 @@ Scene scene_hotel() {
 
         GRRLIB_Render();
     }
+
+    return Scene::Title;
 }

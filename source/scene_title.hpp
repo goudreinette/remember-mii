@@ -17,9 +17,6 @@ Scene scene_title() {
     
     GRRLIB_texImg* remembermii_img = GRRLIB_LoadTexture(remember_mii_jpg);
 
-    int width = rmode->viWidth;
-    int height = rmode->viHeight;
-
     int i = 0;
     float slide_opacity = 0;
     bool outro = false;
@@ -63,4 +60,6 @@ Scene scene_title() {
 
         GRRLIB_Render();
     }
+
+    return Scene::Title;
 }

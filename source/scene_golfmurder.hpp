@@ -72,4 +72,6 @@ Scene scene_golfmurder() {
         // GRRLIB_DrawImg(60, 0, bg, 0, 1., 1., RGBA(255,255,255,255));  // Draw a jpeg
         GRRLIB_Render();
     }
+
+    return Scene::Title;
 }

@@ -32,13 +32,12 @@ Scene scene_golfclass() {
         &golf_classes_6_jpg
     };
 
-    // GRRLIB_texImg* bg = GRRLIB_LoadTexture(golf_classes_1_jpg);
 
     int slide_i = 0;
     float slide_opacity = 0;
-    float timer;
+    // float timer;
 
-    bool is_intro = true;
+    // bool is_intro = true;
     bool transition_down = false;
     
     GRRLIB_texImg* frame = GRRLIB_LoadTexture(*frames[slide_i]);
@@ -85,4 +84,6 @@ Scene scene_golfclass() {
 
         GRRLIB_Render();
     }
+
+    return Scene::Title;
 }

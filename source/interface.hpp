@@ -51,7 +51,7 @@ struct ChoiceButton {
         h = height;
     }
 
-    bool choose() {
+    void choose() {
         chosen = true;
     }
 

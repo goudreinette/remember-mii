@@ -16,8 +16,6 @@ Scene scene_lettertomunincipality() {
     GRRLIB_texImg* writing_img = GRRLIB_LoadTexture(letter_writing_scene_jpg);;
     GRRLIB_texImg* letter_img =  GRRLIB_LoadTexture(the_letter_itself_jpg);;
 
-    int width = rmode->viWidth;
-    int height = rmode->viHeight;
 
     float t = 0;
 
@@ -59,9 +57,9 @@ Scene scene_lettertomunincipality() {
         if (showing_letter) {
 
         } else {
-            float alpha = map(sin(t / 30.0), -1.0, 1.0, 200.0, 255.0);
+            // float alpha = map(sin(t / 30.0), -1.0, 1.0, 200.0, 255.0);
             // float scale = map(sin(t / 10.0), -1.0, 1.0, .9, 1.);
-            float scale = 1.;
+            // float scale = 1.;
             // GRRLIB_DrawImg(102, 377, continue_img, 0, scale, scale, RGBA(255,255,255,alpha));
 
             // if (t % 120 < 60) {
