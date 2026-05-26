@@ -51,7 +51,7 @@ Scene scene_title() {
 
             if (outro_i == 200) {
                 GRRLIB_FreeTexture(remembermii_img);
-                continue_button::chosen = false;
+                continue_button::reset_chosen();
                 return Scene::Intro;
             }
         }
