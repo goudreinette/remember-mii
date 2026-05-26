@@ -39,8 +39,6 @@ Scene scene_lettertomunincipality() {
 
         controller mote = update_wiimote();
 
-
-
         // Draw letter
         if (showing_letter) {
             letter_opacity = lrp(letter_opacity, 255, .1);
