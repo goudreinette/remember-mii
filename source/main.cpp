@@ -67,7 +67,7 @@ int main() {
   ASND_Init();
   MP3Player_Init();
 
-  Scene current_scene = Scene::Title;
+  Scene current_scene = Scene::LetterToMunincipality;
   Scene next_scene;
   cursor::load();
 

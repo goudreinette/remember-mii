@@ -30,7 +30,12 @@ Scene scene_lettertomunincipality() {
 
     while (SYS_MainLoop()) {
         t++;
-        slide_opacity = lrp(slide_opacity, 255, slide_speed);
+
+        if (outro) {
+            slide_opacity = lrp(slide_opacity, 0, slide_speed);
+        } else {
+            slide_opacity = lrp(slide_opacity, 255, slide_speed);
+        }
 
         controller mote = update_wiimote();
 
@@ -122,7 +127,7 @@ Scene scene_lettertomunincipality() {
             outro_i++;
         }
 
-        if (outro_i > 60) {
+        if (outro_i > 120) {
             GRRLIB_FreeTexture(writing_img);
             GRRLIB_FreeTexture(letter_img);
             continue_button::reset_chosen();
